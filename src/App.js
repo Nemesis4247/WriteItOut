@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { QuestionsList } from './Components/ques-list'
 import './App.css';
 import Register from './Components/Register/Register';
 import Signin from './Components/Signin/Signin';
@@ -44,11 +45,15 @@ class App extends Component {
             {
               this.state.route === 'signin'?
               <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />:
-              <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }   />
+              (
+                this.state.route === 'register'?
+                <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />:
+                <QuestionsList />
+              )
             }
         </div>
       );
     }
-    }
+}
 
 export default App;
