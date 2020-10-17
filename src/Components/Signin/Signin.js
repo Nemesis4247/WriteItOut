@@ -9,6 +9,7 @@ import { fadeIn } from 'react-animations';
 import { fadeOut } from 'react-animations';
 import { zoomIn } from 'react-animations';
 import Radium, {StyleRoot} from 'radium';
+import { NavLink } from 'react-router-dom';
 
 
 const styles = {
@@ -67,7 +68,7 @@ class Signin extends React.Component {
 						.then(result => result.json())
 						.then(friends => {
 								this.props.loadUser(data, friends);
-								this.props.onRouteChange('home');
+								// this.props.onRouteChange('home');
 						})
 						.catch(err => {
 							console.log(err);
@@ -81,7 +82,6 @@ class Signin extends React.Component {
 
 
 	render(){
-		const { onRouteChange } = this.props;
 	return(
 		<StyleRoot>
 		<div className="tc dt pv5 ph7" style={styles.zoomIn}>
@@ -152,11 +152,16 @@ class Signin extends React.Component {
 		        <hr className="mt4"/>
 		        <div className="tc b f6 mt2 glow pa2 i">
 		          New Member?
-		          <p
+				  	<NavLink 
+					  to="/register"
+					  className="white pointer bg-black pa2 mh5 br4"
+					>Register here
+					</NavLink>
+		          {/* <p
 			          className="white pointer bg-black pa2 mh5 br4"
 			          onClick={() => onRouteChange('register')}>
 			          Register here
-		          </p>
+		          </p> */}
 		        </div>
 
 		      </div>

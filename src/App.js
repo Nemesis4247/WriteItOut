@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { QuestionsList } from './Components/ques-list'
+import { QuestionsList } from './Components/Mainpage/ques-list';
+import Answer from './Components/Mainpage/Answer';
 import './App.css';
 import Register from './Components/Register/Register';
 import Signin from './Components/Signin/Signin';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 const initialState = {
-      route: 'signin',
       user: {
         'name':'',
         'email':'',
@@ -32,17 +37,12 @@ class App extends Component {
       })
       }
 
-      onRouteChange = (route) => {
-        if(route === 'signout'){
-          this.setState(initialState);
-        }
-        this.setState({route: route});
-      }
 
       render(){
       return (
-        <div className="App">
-            {
+        <Router>
+          <div className="App">
+            {/* {
               this.state.route === 'signin'?
               <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />:
               (
@@ -50,8 +50,23 @@ class App extends Component {
                 <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />:
                 <QuestionsList />
               )
-            }
-        </div>
+            } */}
+            <Switch>
+              <Route path="/home">
+                <QuestionsList />
+              </Route>
+              <Route path="/register">
+                <Register loadUser = { this.loadUser } />
+              </Route>
+              <Route path="/question/:id">
+                <Answer />
+              </Route>
+              <Route path="/">
+                <Signin loadUser = { this.loadUser } />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
       );
     }
 }

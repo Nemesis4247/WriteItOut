@@ -9,6 +9,7 @@ import mail from './mail.svg';
 import link from './link.svg';
 import { zoomIn } from 'react-animations';
 import Radium, {StyleRoot} from 'radium';
+import { NavLink } from 'react-router-dom';
 
 
 const styles = {
@@ -62,13 +63,12 @@ class Register extends React.Component {
 				if(data.id){
 					const friends = [];
 					this.props.loadUser(data, friends);
-					this.props.onRouteChange('home');
+					// this.props.onRouteChange('home');
 				}
 			})
 	}
 
 	render(){
-		const { onRouteChange } = this.props;
 	return(
 		<StyleRoot>
 		<div className="tc dt pv5 ph7" style={styles.zoomIn}>
@@ -170,11 +170,16 @@ class Register extends React.Component {
 		        <hr className="mt4"/>
 		        <div className="tc b f6 mt2 glow pa2 i">
 		          Already Registered ?
-		          <p
+				  	<NavLink 
+					  to="/"
+					  className="white pointer bg-black pa2 mh5 br4"
+					>Sign In
+					</NavLink>
+		          {/* <p
 			          className="white pointer bg-black pa2 mh5 br4"
 			          onClick={() => onRouteChange('signin')}>
 			          Sign In
-		          </p>
+		          </p> */}
 		        </div>
 
 		      </div>

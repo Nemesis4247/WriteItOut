@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import styles from './Answer.module.css'
-import Profile from './Signin/chico.png'
+import React, { useEffect, useState } from 'react';
+import styles from './Answer.module.css';
+import Profile from '../Signin/chico.png';
+import { useParams } from 'react-router-dom';
 
 export default function Answer() {
     const [liked, setLiked] = useState(false)
@@ -9,7 +10,10 @@ export default function Answer() {
 
     const [commentText, setCommentText] = useState('')
 
+    let { id } = useParams();
+
     useEffect(() => {
+        console.log('question id : ', id);
         if (liked) {
             setUpvoteBG('deepskyblue')
             setUpvoteTextColor('white')
@@ -18,7 +22,7 @@ export default function Answer() {
             setUpvoteBG('white')
             setUpvoteTextColor('black')
         }
-    }, [liked])
+    }, [liked, id])
 
     return (
         <div id={styles.container}>
