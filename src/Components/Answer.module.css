@@ -29,3 +29,44 @@ h5, p {
 #body {
     padding-left: 5px;
 }
+
+#upvoteButton {
+    padding: 5px 10px;
+    margin: 5px;
+    border-width: 1px;
+    border-radius: 5px;
+    outline-style: none;
+}
+
+#comment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#commenterPhoto {
+    height: 40px;
+    border-radius: 40px;
+    justify-self: center;
+}
+
+#commentBox {
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    overflow: hidden;
+    padding: 5px;
+    resize: none;
+    margin: 5px;
+}
+
+#addComment {
+    padding: 8px 10px;
+    border-radius: 30px;
+    outline: none;
+    border-width: 0;
+    background-color: cornflowerblue;
+    color: white;
+    font-size: small;
+    font-weight: 600;
+}
