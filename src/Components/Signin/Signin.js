@@ -45,38 +45,22 @@ class Signin extends React.Component {
 	}
 
 	onSubmitSignIn = () => {
-		fetch('https://agile-headland-13060.herokuapp.com/signin',{
-			method: 'post',
-			headers: {'Content-Type':'application/json'},
-			body:JSON.stringify({
-				email: this.state.signInEmail,
-				password: this.state.signInPassword
-			})
-		})
-			.then(response => response.json())
-			.then(data => {
-				console.log(data.name);
-				if(data.id){
-					fetch('https://agile-headland-13060.herokuapp.com/contacts',{
-						method: 'post',
-						headers: {'Content-Type':'application/json'},
-						body:JSON.stringify({
-							name: data.name
-						})
-					})
-						.then(result => result.json())
-						.then(friends => {
-								this.props.loadUser(data, friends);
-								this.props.onRouteChange('home');
-						})
-						.catch(err => {
-							console.log(err);
-						})
-				}
-			})
-			.catch(err => {
-				console.log(err);
-			})
+    this.props.onRouteChange("MainScreen");
+		// fetch('https://agile-headland-13060.herokuapp.com/signin',{
+		// 	method: 'post',
+		// 	headers: {'Content-Type':'application/json'},
+		// 	body:JSON.stringify({
+		// 		email: this.state.signInEmail,
+		// 		password: this.state.signInPassword
+		// 	})
+		// })
+		// 	.then(response => response.json())
+		// 	.then(data => {
+    //
+		// 	})
+		// 	.catch(err => {
+		// 		console.log(err);
+		// 	})
 	}
 
 
@@ -143,9 +127,9 @@ class Signin extends React.Component {
 		            <p className="serif tracked  pv1 f6 tc"
 		            style={{ fontFamily: 'Abril Fatface' }}>or</p>
 		            <div className="tc">
-		            <img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w2-ns h1 h2-ns" title="In Beta Mode" src={ fb } id = 'inputimage' alt='Face' width='500px' height='auto'/>
-		            <img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w2-ns h1 h2-ns" title="In Beta Mode" src={ ins } id = 'inputimage' alt='Face' width='500px' height='auto'/>
-		            <img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w2-ns h1 h2-ns" title="In Beta Mode" src={ go } id = 'inputimage' alt='Face' width='500px' height='auto'/>
+		            <img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w2-ns h1 h2-ns" title="In Beta Mode" src={ fb } id = 'inputimage' alt='facebook' width='500px' height='auto' onClick={() => onRouteChange("Pandey") }/>
+		            <img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w2-ns h1 h2-ns" title="In Beta Mode" src={ ins } id = 'inputimage' alt='instagram' width='500px' height='auto'/>
+		            <img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w2-ns h1 h2-ns" title="In Beta Mode" src={ go } id = 'inputimage' alt='google' width='500px' height='auto'/>
 		          	</div>
 		          </div>
 		        </div>
