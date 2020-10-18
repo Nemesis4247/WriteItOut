@@ -9,14 +9,14 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import MainScreen from './Components/MainScreen/MainScreen';
 
 const initialState = {
       user: {
         'name':'',
         'email':'',
         'imageurl':''
-      },
-      friendslist: []
+      }
     }
 
 class App extends Component {
@@ -26,17 +26,31 @@ class App extends Component {
         this.state = initialState;
       }
 
-       loadUser = (data, friends) => {
+      loadUser = (data) => {
         this.setState({
           user: {
             'name':data.name,
             'email':data.email,
             'imageurl':data.imageurl
-        },
-          friendslist: friends
-      })
+          }
+        })
       }
 
+
+      renderSwitch(param) {
+        switch(param) {
+          case 'signin':
+            return <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />
+          case 'register':
+            return <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />
+          case 'Pandey':
+            return <QuestionsList />
+          case 'MainScreen':
+            return <MainScreen onRouteChange = { this.onRouteChange } />
+          default:
+            return 'foo';
+        }
+      }
 
       render(){
       return (
