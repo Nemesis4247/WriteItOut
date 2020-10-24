@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Answer.module.css';
 import Profile from '../Signin/chico.png';
 import { useParams } from 'react-router-dom';
+import Comment from './Comment'
 
 export default function Answer() {
     const [liked, setLiked] = useState(false)
@@ -66,6 +67,10 @@ export default function Answer() {
                 >
                     Add comment
                 </button>
+            </div>
+            <div>
+                <Comment />
+                <Comment />
             </div>
         </div>
     )
