@@ -326,60 +326,39 @@ class MainScreen extends React.Component {
                 <button onClick={this.postQuestion}
                   style={{ fontFamily: 'Luckiest Guy' }}
                   className="input-reset w-10 bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Post</button>
-                <Popup trigger={<button onClick={this.addTags}
-                  style={{ fontFamily: 'Luckiest Guy' }}
-                  className="input-reset w-10 v-btm bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Add tags</button>}
-                  position="top center">
-                  <div>
-                    <input refs="newTag" type="text" className="w-100 f3 br3 input-reset ba b--black-20 pa2"
-                      onChange={this.updateTagString}
-                      value={this.state.tag_string}
-                      onKeyPress={this.tagKeyPressed} />
+                  <Popup trigger={<button onClick={ this.addTags }
+                    style={{ fontFamily: 'Luckiest Guy' }}
+                    className="input-reset w-10 v-btm bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Add tags</button>}
+                    position="top center">
+                    <div>
+                      <input refs="newTag" type="text" className="w-100 f3 br3 input-reset ba b--black-20 pa2"
+                      onChange={ this.updateTagString }
+                      value={ this.state.tag_string }
+                      onKeyPress={ this.tagKeyPressed }/>
+                    </div>
+                  </Popup>
+                  <div className="pa2" style={{fontFamily: 'Bree Serif' }}>
+      							<Tags_list tags={ this.state.tags_list } removeTag={ this.removeTag.bind(this) }/>
+      						</div>
+                </div>
+              </div>
+
+              <div className="w-100 pa3 tc bg-near-black br3 ma1">
+                <div className="dt w-100">
+                  <input id="srchQue" onChange={ this.searchQuestion } className="input-reset ba b--black-20 w-60 f4 dtc br3 pa3 border-box"
+                  type="text" placeholder='Search Question' />
+                  <div className="dtc w-40">
+                    <p className="f4 b white dib">Search by tags</p>
+                    <Switch onChange={this.handleChange} checked={this.state.checked} className="dib mt2"/>
                   </div>
-                </Popup>
-                <div className="pa2" style={{ fontFamily: 'Bree Serif' }}>
-                  <Tags_list tags={this.state.tags_list} removeTag={this.removeTag.bind(this)} />
                 </div>
+                <Scroll>
+                  <div >
+                    <QuestionList questions={ filteredQuestionList } />
+                  </div>
+                </Scroll>
               </div>
-            </div>
-
-        <div className="dtc w-70 bg-near-white v-top" >
-
-
-          <div className="dt v-top w-100 h4 br3 bg-near-black ma1">
-            <div className="dtc mid-gray pa1">
-              <input placeholder="Write your question here" type="text"
-              onChange={ this.onQuestionChange }
-              value={this.state.question}
-              style={{ fontFamily: 'Josefin Sans' }}
-              className="w-100 f4 br3 h4 input-reset ba b--black-20 mr3 pv3 ph3" />
-              <button onClick={ this.postQuestion }
-              style={{ fontFamily: 'Luckiest Guy' }}
-              className="input-reset w-10 bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Post</button>
-              <Popup trigger={<button onClick={ this.addTags }
-                style={{ fontFamily: 'Luckiest Guy' }}
-                className="input-reset w-10 v-btm bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Add tags</button>}
-                position="top center">
-                <div>
-                  <QuestionsList />
-                </div>
-              </Scroll>
-            </div>
-
-          <div className="w-100 pa3 tc bg-near-black br3 ma1">
-            <div className="dt w-100">
-              <input id="srchQue" onChange={ this.searchQuestion } className="input-reset ba b--black-20 w-60 f4 dtc br3 pa3 border-box"
-              type="text" placeholder='Search Question' />
-              <div className="dtc w-40">
-                <p className="f4 b white dib">Search by tags</p>
-                <Switch onChange={this.handleChange} checked={this.state.checked} className="dib mt2"/>
-              </div>
-            </div>
-            <Scroll>
-              <div >
-                <QuestionList questions={ filteredQuestionList } />
-              </div>
-            </Scroll>
+              
           </div>
 
         </div>
