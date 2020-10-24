@@ -46,22 +46,27 @@ class Signin extends React.Component {
 	}
 
 	onSubmitSignIn = () => {
-		// this.props.onRouteChange("MainScreen");
-		// fetch('https://agile-headland-13060.herokuapp.com/signin',{
-		// 	method: 'post',
-		// 	headers: {'Content-Type':'application/json'},
-		// 	body:JSON.stringify({
-		// 		email: this.state.signInEmail,
-		// 		password: this.state.signInPassword
-		// 	})
-		// })
-		// 	.then(response => response.json())
-		// 	.then(data => {
-		//
-		// 	})
-		// 	.catch(err => {
-		// 		console.log(err);
-		// 	})
+    fetch('http://127.0.0.1:3001/signin',{
+			method: 'post',
+			headers: {'Content-Type':'application/json'},
+			body:JSON.stringify({
+				email: this.state.signInEmail,
+				password: this.state.signInPassword
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				if(data.status){
+					this.props.loadUser(data.data.message);
+					this.props.onRouteChange('MainScreen');
+				}
+        else{
+          alert(data.data.message)
+        }
+			})
+      .catch(err => {
+        alert("Signin failed due to " + err)
+      })
 	}
 
 

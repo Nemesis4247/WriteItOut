@@ -8,18 +8,22 @@ class QuestionList extends React.Component {
 	}
 
 	render() {
-    const QuestionComponent = this.props.tags.map((question, i) => {
+		var size = this.props.questions.length;
+    var questionComponent = this.props.questions.map((question, i) => {
       return (
         <Question
           key={i}
-          question={question}
-          username={question.name}
-          upvotes={question.upvotes}
+					question_id={this.props.questions[i].question_id}
+          question={this.props.questions[i].question}
+					liked={false}
+					description={this.props.questions[i].description}
+          username={this.props.questions[i].username}
+          upvotes={this.props.questions[i].upvotes}
         />
       );
     });
 
-    return <div>{ QuestionComponent }</div>;
+    return <div>{ questionComponent }</div>;
   }
 }
 

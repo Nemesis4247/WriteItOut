@@ -12,12 +12,17 @@ import {
 import MainScreen from './Components/MainScreen/MainScreen';
 
 const initialState = {
-  user: {
-    'name': '',
-    'email': '',
-    'imageurl': ''
-  }
-}
+      route: 'signin',
+      user: {
+        'name':'',
+        'email':'',
+        'imagepath':'',
+        'enr_no':'',
+        'year':'',
+        'branch':'',
+        'description':'',
+      }
+    }
 
 class App extends Component {
 
@@ -29,42 +34,37 @@ class App extends Component {
   loadUser = (data) => {
     this.setState({
       user: {
-        'name': data.name,
-        'email': data.email,
-        'imageurl': data.imageurl
+        'name':data.name,
+        'email':data.email,
+        'imagepath':data.imagepath,
+        'userid':data.userid,
+        'year':data.year,
+        'branch':data.branch,
+        'description':data.description
       }
     })
+    console.log(this.state.user);
   }
 
-
-  // renderSwitch(param) {
-  //   switch(param) {
-  //     case 'signin':
-  //       return <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />
-  //     case 'register':
-  //       return <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />
-  //     case 'Pandey':
-  //       return <QuestionsList />
-  //     case 'MainScreen':
-  //       return <MainScreen onRouteChange = { this.onRouteChange } />
-  //     default:
-  //       return 'foo';
-  //   }
-  // }
+  renderSwitch(param) {
+    switch(param) {
+      case 'signin':
+        return <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />
+      case 'register':
+        return <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />
+      case 'Pandey':
+        return <QuestionsList />
+      case 'MainScreen':
+        return <MainScreen data = { this.state.user } onRouteChange = { this.onRouteChange } />
+      default:
+        return 'foo';
+    }
+  }
 
   render() {
     return (
       <Router>
         <div className="App">
-          {/* {
-              this.state.route === 'signin'?
-              <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />:
-              (
-                this.state.route === 'register'?
-                <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />:
-                <QuestionsList />
-              )
-            } */}
           <Switch>
             <Route path="/home">
               <MainScreen />
