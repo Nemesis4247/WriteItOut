@@ -10,7 +10,11 @@ const initialState = {
       user: {
         'name':'',
         'email':'',
-        'imageurl':''
+        'imagepath':'',
+        'enr_no':'',
+        'year':'',
+        'branch':'',
+        'description':'',
       }
     }
 
@@ -26,9 +30,14 @@ class App extends Component {
           user: {
             'name':data.name,
             'email':data.email,
-            'imageurl':data.imageurl
+            'imagepath':data.imagepath,
+            'userid':data.userid,
+            'year':data.year,
+            'branch':data.branch,
+            'description':data.description
           }
         })
+        console.log(this.state.user);
       }
 
       onRouteChange = (route) => {
@@ -47,7 +56,7 @@ class App extends Component {
           case 'Pandey':
             return <QuestionsList />
           case 'MainScreen':
-            return <MainScreen onRouteChange = { this.onRouteChange } />
+            return <MainScreen data = { this.state.user } onRouteChange = { this.onRouteChange } />
           default:
             return 'foo';
         }
@@ -57,13 +66,6 @@ class App extends Component {
       return (
         <div className="App">
             { this.renderSwitch(this.state.route)
-              // this.state.route === 'signin'?
-              // <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />:
-              // (
-              //   this.state.route === 'register'?
-              //   <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />:
-              //   <QuestionsList />
-              // )
             }
         </div>
       );

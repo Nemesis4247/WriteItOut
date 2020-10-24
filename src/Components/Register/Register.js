@@ -26,7 +26,11 @@ class Register extends React.Component {
 			email: '',
 			password: '',
 			name: '',
-			imageurl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRACqHZnYq7HfFp_OshaZ-Hgc_1mjYqJrWJpc71xNWcxdts2O0j6g'
+			imageurl:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRACqHZnYq7HfFp_OshaZ-Hgc_1mjYqJrWJpc71xNWcxdts2O0j6g',
+      branch: '',
+      year: '',
+      description: '',
+      enr_no: 0
 		}
 	}
 
@@ -46,25 +50,50 @@ class Register extends React.Component {
 		this.setState({ imageurl: event.target.value });
 	}
 
+  onEnrollChange = (event) => {
+		this.setState({ enr_no: event.target.value });
+	}
+
+  onDescriptionChange = (event) => {
+		this.setState({ description: event.target.value });
+	}
+
+  onBranchChange = (event) => {
+		this.setState({ branch: event.target.value });
+	}
+
+  onYearChange = (event) => {
+		this.setState({ year: event.target.value });
+	}
+
 	onSubmitSignIn = () => {
-		fetch('https://agile-headland-13060.herokuapp.com/register',{
+		fetch('https://127.0.0.1:3001/register',{
 			method: 'post',
 			headers: {'Content-Type':'application/json'},
 			body:JSON.stringify({
 				name: this.state.name,
 				email: this.state.email,
 				password: this.state.password,
-				imageurl: this.state.imageurl
+				imagePath: this.state.imageurl,
+        year: this.state.year,
+        branch: this.state.branch,
+        description: this.state.description,
+        userid: this.state.enr_no
 			})
 		})
 			.then(response => response.json())
 			.then(data => {
-				if(data.id){
-					const friends = [];
-					this.props.loadUser(data, friends);
-					this.props.onRouteChange('home');
+				if(data.status){
+					this.props.loadUser(data.data.message);
+					this.props.onRouteChange('MainScreen');
 				}
+        else{
+          alert(data.data.message)
+        }
 			})
+      .catch(err => {
+        alert("Registration failed due to ", err)
+      })
 	}
 
 	render(){
@@ -118,37 +147,53 @@ class Register extends React.Component {
 				  </div>
 
 		          <div className="v-mid">
-		            <img className="ba dib b--black-10 v-mid br-100 w1 w3-ns h1 h3-ns"
-		            src={ logo } alt='Face' width='500px' height='auto'/>
-		            <input type="email" placeholder="first name" name="email"
+		            <input type="text" placeholder="username*" name="email"
 		            onChange={ this.onNameChange }
 		            className="input-reset dib f3 ba bw1 mw-100 p5 black b ma3 pv2 ph3 bg-white hover-bg-white-70 hover-gray outline-0 bn br2" />
 		          </div>
 
 		          <div className="v-mid">
-		            <img className="ba dib b--black-10 v-mid br-100 w1 w3-ns h1 h3-ns"
-		            src={ mail } alt='Face' width='500px' height='auto'/>
-		            <input type="email" placeholder="user-email" name="email"
+		            <input type="email" placeholder="user-email*" name="email"
 		            onChange={ this.onEmailChange }
 		            className="input-reset dib f3 ba bw1 mw-100 p5 black b ma3 pv2 ph3 bg-white hover-bg-white-70 hover-gray outline-0 bn br2" />
 		          </div>
 
 		          <div className="v-mid">
-		          	<img className="ba dib b--black-10 v-mid br-100 w1 w3-ns h1 h3-ns"
-		          	src={ key } alt='Face' width='500px' height='auto'/>
 		            <input
 		            type="password"
 		            name="password"
-		            placeholder="password"
+		            placeholder="password*"
 		            onChange={ this.onPasswordChange }
 		            className="input-reset f3 ba dib mw-100 black b ma3 p5 pv2 ph3 bg-white hover-bg-white-70 hover-gray outline-0 bn br2" />
 		          </div>
 
 		          <div className="mb3 v-mid">
-		            <img className="ba dib b--black-10 v-mid br-100 w1 w3-ns h1 h3-ns"
-		            src={ link } alt='Face' width='500px' height='auto'/>
 		            <input type="email" placeholder="image URL" name="email"
 		            onChange={ this.onImageurlChange }
+		            className="input-reset dib f3 ba bw1 mw-100 p5 black b ma3 pv2 ph3 bg-white hover-bg-white-70 hover-gray outline-0 bn br2" />
+		          </div>
+
+              <div className="mb3 v-mid">
+		            <input type="number" placeholder="enrollment number*" name="enr_no"
+		            onChange={ this.onEnrollChange }
+		            className="input-reset dib f3 ba bw1 mw-100 p5 black b ma3 pv2 ph3 bg-white hover-bg-white-70 hover-gray outline-0 bn br2" />
+		          </div>
+
+              <div className="mb3 v-mid">
+		            <input type="text" placeholder="branch of study*" name="stream"
+		            onChange={ this.onBranchChange }
+		            className="input-reset dib f3 ba bw1 mw-100 p5 black b ma3 pv2 ph3 bg-white hover-bg-white-70 hover-gray outline-0 bn br2" />
+		          </div>
+
+              <div className="mb3 v-mid">
+		            <input type="number" placeholder="year of study*" name="year"
+		            onChange={ this.onYearChange }
+		            className="input-reset dib f3 ba bw1 mw-100 p5 black b ma3 pv2 ph3 bg-white hover-bg-white-70 hover-gray outline-0 bn br2" />
+		          </div>
+
+              <div className="mb3 v-mid">
+		            <input type="text" placeholder="description" name="description"
+		            onChange={ this.onDescriptionChange }
 		            className="input-reset dib f3 ba bw1 mw-100 p5 black b ma3 pv2 ph3 bg-white hover-bg-white-70 hover-gray outline-0 bn br2" />
 		          </div>
 
