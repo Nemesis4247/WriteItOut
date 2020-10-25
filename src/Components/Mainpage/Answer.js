@@ -34,6 +34,7 @@ export default function Answer() {
                     <p>This is the bio</p>
                 </div>
             </div>
+            <div id={styles.datetime}>Answered 2020-10-21T17:48:54.921Z</div>
             <div id={styles.body}>
                 This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer
             </div>

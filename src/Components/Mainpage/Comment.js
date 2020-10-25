@@ -12,6 +12,7 @@ export default function Comment() {
                     <p>This is the bio</p>
                 </div>
             </div>
+            <div id={styles.datetime}>Answered 2020-10-21T17:48:54.921Z</div>
             <div id={styles.comment}>
                 This is a comment This is a comment This is a comment This is a comment This is a comment
             </div>

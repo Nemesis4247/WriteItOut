@@ -19,6 +19,11 @@
     font-size: medium;
 }
 
+#datetime {
+    font-size: small;
+    color: gray;
+}
+
 #comment {
     font-size: medium;
 }
