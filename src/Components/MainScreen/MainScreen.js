@@ -36,18 +36,15 @@ class MainScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Hemant",
-      imageURL: "",
-      email: "hy27.1999@gmail.com",
+      name: this.props.data.user.name,
+      imageURL: this.props.data.user.imageurl,
+      email: this.props.data.user.email,
       year_branch: "3rd Year, Computer Science",
       description: "Mobile and Web Developer",
       editprofile: false,
       question: "",
       tag_string: "",
       tags_list: []
-      // name: this.props.data.user.name,
-      // imageURL: this.props.data.user.imageurl,
-      // email: this.props.data.user.email,
     }
   }
 

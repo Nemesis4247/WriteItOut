@@ -13,9 +13,9 @@ import MainScreen from './Components/MainScreen/MainScreen';
 
 const initialState = {
   user: {
-    'name': '',
-    'email': '',
-    'imageurl': ''
+    name: 'Edward Elric',
+    email: 'Elric@gmail.com',
+    imageurl: ''
   }
 }
 
@@ -67,13 +67,13 @@ class App extends Component {
             } */}
           <Switch>
             <Route path="/home">
-              <MainScreen />
+              <MainScreen data={this.state} />
             </Route>
             <Route path="/register">
               <Register loadUser={this.loadUser} />
             </Route>
             <Route path="/question/:id">
-              <Answer />
+              <Answer data={this.state} />
             </Route>
             <Route path="/">
               <Signin loadUser={this.loadUser} />
