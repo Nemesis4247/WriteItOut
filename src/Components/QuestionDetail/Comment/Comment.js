@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Comment.module.css'
-import Profile from '../Signin/chico.png';
+import Profile from '../../Signin/chico.png';
 
 export default function Comment(props) {
     return (
@@ -12,7 +12,7 @@ export default function Comment(props) {
                     <p>This is the bio</p>
                 </div>
             </div>
-            <div id={styles.datetime}>Answered {props.datetime}</div>
+            <div id={styles.datetime}>Commented {props.datetime}</div>
             <div id={styles.comment}>
                 {props.body}
             </div>

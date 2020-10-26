@@ -38,7 +38,7 @@ class MainScreen extends React.Component {
     super(props);
     this.state = {
       name: this.props.data.user.name,
-      imageURL: this.props.data.user.imagepath,
+      imageURL: this.props.data.user.profilepic,
       email: this.props.data.user.email,
       year: this.props.data.user.year,
       branch: this.props.data.user.branch,
@@ -95,7 +95,7 @@ class MainScreen extends React.Component {
     console.log(" main : ", this.props.data.user)
     this.setState({
       name: this.props.data.user.name,
-      imageURL: this.props.data.user.imagepath,
+      imageURL: this.props.data.user.profilepic,
       email: this.props.data.user.email,
       year: this.props.data.user.year,
       branch: this.props.data.user.branch,
@@ -140,7 +140,7 @@ class MainScreen extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: this.state.name,
-          imagePath: this.state.imageURL,
+          profilepic: this.state.imageURL,
           year: this.state.year,
           branch: this.state.branch,
           description: this.state.description,
@@ -264,7 +264,7 @@ class MainScreen extends React.Component {
               </div>
             </div>
 
-            <img src={this.state.imageURL === "" ? profile : this.state.imageURL}
+            <img src={this.state.imageURL ? this.state.imageURL : profile}
               className="dib center w5 mv4 h5 br-100 pointer"
               alt="profile pic" />
 

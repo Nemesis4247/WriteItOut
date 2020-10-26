@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { QuestionsList } from './Components/MainScreen/ques-list';
 import { Profile } from './Components/Profile/profile'
-import Answer from './Components/QuestionDetail/Answer';
+import QuesAnsComment from './Components/QuestionDetail/QuesAnsComment';
 import './App.css';
 import Register from './Components/Register/Register';
 import Signin from './Components/Signin/Signin';
@@ -63,7 +62,7 @@ class App extends Component {
               <Register loadUser={this.loadUser} />
             </Route>
             <Route path="/question/:id">
-              <Answer data={this.state} />
+              <QuesAnsComment data={this.state} />
             </Route>
             <Route path="/">
               <Signin loadUser={this.loadUser} />
