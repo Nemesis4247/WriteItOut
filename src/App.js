@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { QuestionsList } from './Components/MainScreen/ques-list';
+import { Profile } from './Components/Profile/profile'
 import Answer from './Components/Mainpage/Answer';
 import './App.css';
 import Register from './Components/Register/Register';
@@ -13,10 +14,15 @@ import MainScreen from './Components/MainScreen/MainScreen';
 
 const initialState = {
   user: {
-    name: 'Edward Elric',
-    email: 'Elric@gmail.com',
-    imageurl: ''
-  }
+    'name': '',
+    'email': '',
+    'imagepath': '',
+    'enr_no': '',
+    'year': '',
+    'branch': '',
+    'description': '',
+  },
+  isLoggedin: false
 }
 
 class App extends Component {
@@ -31,41 +37,25 @@ class App extends Component {
       user: {
         'name': data.name,
         'email': data.email,
-        'imageurl': data.imageurl
-      }
+        'imagepath': data.imagepath,
+        'userid': data.userid,
+        'year': data.year,
+        'branch': data.branch,
+        'description': data.description
+      },
+      isLoggedin: true
     })
+    console.log("app js load user : ", this.state.user);
   }
-
-
-  // renderSwitch(param) {
-  //   switch(param) {
-  //     case 'signin':
-  //       return <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />
-  //     case 'register':
-  //       return <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />
-  //     case 'Pandey':
-  //       return <QuestionsList />
-  //     case 'MainScreen':
-  //       return <MainScreen onRouteChange = { this.onRouteChange } />
-  //     default:
-  //       return 'foo';
-  //   }
-  // }
 
   render() {
     return (
       <Router>
         <div className="App">
-          {/* {
-              this.state.route === 'signin'?
-              <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />:
-              (
-                this.state.route === 'register'?
-                <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />:
-                <QuestionsList />
-              )
-            } */}
           <Switch>
+            <Route path="/profile/:id">
+              <Profile data={this.state} />
+            </Route>
             <Route path="/home">
               <MainScreen data={this.state} />
             </Route>

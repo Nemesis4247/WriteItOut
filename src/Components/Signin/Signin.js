@@ -9,7 +9,7 @@ import { fadeIn } from 'react-animations';
 import { fadeOut } from 'react-animations';
 import { zoomIn } from 'react-animations';
 import Radium, { StyleRoot } from 'radium';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 
 const styles = {
@@ -46,22 +46,28 @@ class Signin extends React.Component {
 	}
 
 	onSubmitSignIn = () => {
-		// this.props.onRouteChange("MainScreen");
-		// fetch('https://agile-headland-13060.herokuapp.com/signin',{
-		// 	method: 'post',
-		// 	headers: {'Content-Type':'application/json'},
-		// 	body:JSON.stringify({
-		// 		email: this.state.signInEmail,
-		// 		password: this.state.signInPassword
-		// 	})
-		// })
-		// 	.then(response => response.json())
-		// 	.then(data => {
-		//
-		// 	})
-		// 	.catch(err => {
-		// 		console.log(err);
-		// 	})
+		const { history } = this.props;
+		fetch('http://127.0.0.1:3001/signin', {
+			method: 'post',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				email: this.state.signInEmail,
+				password: this.state.signInPassword
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				if (data.status) {
+					this.props.loadUser(data.data.message);
+					history.push(`/home`);
+				}
+				else {
+					alert(data.data.message)
+				}
+			})
+			.catch(err => {
+				alert("Signin failed due to " + err)
+			})
 	}
 
 
@@ -156,4 +162,4 @@ class Signin extends React.Component {
 	}
 }
 
-export default Signin;
+export default withRouter(Signin);
