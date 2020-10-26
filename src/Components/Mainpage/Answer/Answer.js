@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Answer.module.css';
-import Profile from '../Signin/chico.png';
-import { useParams } from 'react-router-dom';
-import Comment from './Comment'
+import styles from './Answer.module.css'
+import Profile from 'C:/Users/devji/Desktop/DBMS Project/WriteItOut/src/Components/Signin/chico.png'
+import Comment from '../Comment/Comment'
 
 export default function Answer(props) {
     const [liked, setLiked] = useState(false)
     const [upvoteBG, setUpvoteBG] = useState('white')
     const [upvoteTextColor, setUpvoteTextColor] = useState('black')
-
     const [commentText, setCommentText] = useState('')
 
-    let { id } = useParams();
-
     useEffect(() => {
-        console.log('question id : ', id);
         if (liked) {
             setUpvoteBG('deepskyblue')
             setUpvoteTextColor('white')
@@ -23,7 +18,27 @@ export default function Answer(props) {
             setUpvoteBG('white')
             setUpvoteTextColor('black')
         }
-    }, [liked, id])
+    }, [liked])
+
+    function addComment() {
+        fetch('http://127.0.0.1:3001/comment', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                comment: commentText,
+                ansid: props.ansid,
+                userid: props.userid
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Comment added!')
+                }
+                else {
+                    alert('Error')
+                }
+            })
+    }
 
     return (
         <div id={styles.container}>
@@ -49,6 +64,7 @@ export default function Answer(props) {
                 >
                     Upvote
                 </button>
+                {props.upvotes} upvotes
             </div>
             <div id={styles.comment}>
                 <img src={Profile} id={styles.commenterPhoto} />
@@ -61,6 +77,7 @@ export default function Answer(props) {
                         e.target.style.height = e.target.scrollHeight + 'px'
                     }}
                     value={commentText}
+                    onClick={addComment}
                 />
                 <button
                     id={styles.addComment}
@@ -69,14 +86,12 @@ export default function Answer(props) {
                     Add comment
                 </button>
             </div>
-            <div>
-                {props.comments.map(comment =>
-                    <Comment
-                        body={comment.comment}
-                        datetime={comment.datetime}
-                    />
-                )}
-            </div>
+            {props.comments.map(comment => {
+                return <Comment
+                    body={comment.comment}
+                    datetime={comment.datetime}
+                />
+            })}
         </div>
     )
 }
