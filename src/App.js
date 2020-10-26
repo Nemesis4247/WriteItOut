@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { QuestionsList } from './Components/MainScreen/ques-list';
 import { Profile } from './Components/Profile/profile'
-import Answer from './Components/Mainpage/Answer';
+import Answer from './Components/QuestionDetail/Answer';
 import './App.css';
 import Register from './Components/Register/Register';
 import Signin from './Components/Signin/Signin';
@@ -14,13 +14,13 @@ import MainScreen from './Components/MainScreen/MainScreen';
 
 const initialState = {
   user: {
-    'name': '',
-    'email': '',
+    'name': 'Edward Elric',
+    'email': 'eelric@gmail.com',
     'imagepath': '',
-    'enr_no': '',
-    'year': '',
-    'branch': '',
-    'description': '',
+    'enr_no': '20202020',
+    'year': '2020',
+    'branch': 'CSE',
+    'description': 'Alchemist',
   },
   isLoggedin: false
 }
