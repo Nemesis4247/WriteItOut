@@ -4,7 +4,7 @@ import Profile from '../Signin/chico.png';
 import { useParams } from 'react-router-dom';
 import Comment from './Comment'
 
-export default function Answer() {
+export default function Answer(props) {
     const [liked, setLiked] = useState(false)
     const [upvoteBG, setUpvoteBG] = useState('white')
     const [upvoteTextColor, setUpvoteTextColor] = useState('black')
@@ -34,8 +34,9 @@ export default function Answer() {
                     <p>This is the bio</p>
                 </div>
             </div>
+            <div id={styles.datetime}>Answered {props.datetime}</div>
             <div id={styles.body}>
-                This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer This is the answer
+                {props.body}
             </div>
             <div>
                 <button
@@ -69,8 +70,12 @@ export default function Answer() {
                 </button>
             </div>
             <div>
-                <Comment />
-                <Comment />
+                {props.comments.map(comment =>
+                    <Comment
+                        body={comment.comment}
+                        datetime={comment.datetime}
+                    />
+                )}
             </div>
         </div>
     )
