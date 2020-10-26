@@ -19,6 +19,8 @@ class QuestionList extends React.Component {
 					description={this.props.questions[i].description}
           username={this.props.questions[i].name}
           upvotes={this.props.questions[i].upvotes}
+					userid={this.props.questions[i].userid}
+					currentuserid={this.props.questions[i].currentuserid}
 					imagepath={this.props.questions[i].imagepath}
 					datetime={this.props.questions[i].datetime}
         />
