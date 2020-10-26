@@ -51,45 +51,50 @@ class MainScreen extends React.Component {
       searchQuestionByString: "",
       searchQuestionByTag: "",
       checked: false,
-      questionsList: [
-        {
-          question_id: 1,
-          username: "Hemant Yadav",
-          description: "Mobile and Web Developer",
-          question: "When we see something, it behaves differently, and when we do not see it, it behave differently. Is the world very mysterious? What do you know about Photon of Double Slit?What is one piece of simple advice that actually changed your life?",
-          upvotes: 5
-        },
-        {
-          question_id: 2,
-          username: "Ishaan Pandey",
-          description: "Quantum Computing Enthusiastic",
-          question: "What is the significance of major project in 4th year of engineering if one doesn't want to pursue an engineering job. Like what should one do in the major project if one just wants to get the engineering degree?",
-          upvotes: 3
-        },
-        {
-          question_id: 3,
-          username: "Devjit Meghani",
-          description: "BLockchain Enthusiastic",
-          question: "What is one piece of simple advice that actually changed your life?",
-          upvotes: 7
-        },
-        {
-          question_id: 4,
-          username: "Ashish Ucheniya",
-          description: "Mobile and Web Developer",
-          question: "How do I write some Python code that simulations the toss of a coin (0=heads and 1= tails)? How do I modify this code so that the user is asked if they want to toss again (Y/N)?",
-          upvotes: 5
-        },
-        {
-          question_id: 5,
-          username: "Ankit Aharwal",
-          description: "Mobile and Web Developer",
-          question: "Can TensorFlow lite C++ library be used to program a part of an Operating System since TensorFlow lite C++ library is used in programming microcontrollers?",
-          upvotes: 10
-        },
-      ]
+      questionsList: []
 		}
 	}
+
+  componentDidMount(){
+    fetch('http://127.0.0.1:3001/getQuestionsList')
+    .then(response => response.json())
+    .then(data => {
+        if (data.status) {
+
+                fetch('http://127.0.0.1:3001/likedQuestions',{
+            			method: 'post',
+            			headers: {'Content-Type':'application/json'},
+            			body:JSON.stringify({
+                    userid: this.state.enr_no
+            			})
+            		})
+                .then(response => response.json())
+                .then(data1 => {
+                    if (data1.status) {
+                        var que_list = data.data.message;
+                        var likedQuetions = data1.data.message;
+                        for (var i = 0; i < que_list.length; i++) {
+                          que_list[i]["liked"] = likedQuestions.includes(que_list[i]["queid"])
+                        }
+                        this.setState({questionsList: que_list})
+                    }
+                    else{
+                      alert("Error: " + data1.data.message)
+                    }
+                })
+                .catch(err1 => {
+                    alert("Error: " + err1)
+                });
+
+        }
+        else{
+            alert("Error: " + data.data.message)
+        }
+    })
+    .catch(err => {
+        alert("Error: " + err)
+    });
+  }
 
   onNameChange = (event) => {
 		this.setState({ name: event.target.value })
