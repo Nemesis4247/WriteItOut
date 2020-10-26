@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { QuestionsList } from './Components/MainScreen/ques-list';
+import { Profile } from './Components/Profile/profile'
 import Answer from './Components/Mainpage/Answer';
 import './App.css';
 import Register from './Components/Register/Register';
@@ -12,17 +13,17 @@ import {
 import MainScreen from './Components/MainScreen/MainScreen';
 
 const initialState = {
-      route: 'signin',
-      user: {
-        'name':'',
-        'email':'',
-        'imagepath':'',
-        'enr_no':'',
-        'year':'',
-        'branch':'',
-        'description':'',
-      }
-    }
+  user: {
+    'name': '',
+    'email': '',
+    'imagepath': '',
+    'enr_no': '',
+    'year': '',
+    'branch': '',
+    'description': '',
+  },
+  isLoggedin: false
+}
 
 class App extends Component {
 
@@ -34,31 +35,17 @@ class App extends Component {
   loadUser = (data) => {
     this.setState({
       user: {
-        'name':data.name,
-        'email':data.email,
-        'imagepath':data.imagepath,
-        'userid':data.userid,
-        'year':data.year,
-        'branch':data.branch,
-        'description':data.description
-      }
+        'name': data.name,
+        'email': data.email,
+        'imagepath': data.imagepath,
+        'userid': data.userid,
+        'year': data.year,
+        'branch': data.branch,
+        'description': data.description
+      },
+      isLoggedin: true
     })
-    console.log(this.state.user);
-  }
-
-  renderSwitch(param) {
-    switch(param) {
-      case 'signin':
-        return <Signin loadUser = { this.loadUser } onRouteChange = { this.onRouteChange }  />
-      case 'register':
-        return <Register loadUser = { this.loadUser } onRouteChange = { this.onRouteChange } />
-      case 'Pandey':
-        return <QuestionsList />
-      case 'MainScreen':
-        return <MainScreen data = { this.state.user } onRouteChange = { this.onRouteChange } />
-      default:
-        return 'foo';
-    }
+    console.log("app js load user : ", this.state.user);
   }
 
   render() {
@@ -66,14 +53,17 @@ class App extends Component {
       <Router>
         <div className="App">
           <Switch>
+            <Route path="/profile/:id">
+              <Profile data={this.state} />
+            </Route>
             <Route path="/home">
-              <MainScreen />
+              <MainScreen data={this.state} />
             </Route>
             <Route path="/register">
               <Register loadUser={this.loadUser} />
             </Route>
             <Route path="/question/:id">
-              <Answer />
+              <Answer data={this.state} />
             </Route>
             <Route path="/">
               <Signin loadUser={this.loadUser} />

@@ -35,16 +35,16 @@ const ROOT_CSS = css({
 
 class MainScreen extends React.Component {
 
-	constructor(props){
-		super(props);
-		this.state = {
-			name: this.props.data.name,
-			imageURL: this.props.data.imagepath,
-			email: this.props.data.email,
-      year: this.props.data.year,
-      branch: this.props.data.branch,
-      description: this.props.data.description,
-      enr_no: this.props.data.userid,
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: this.props.data.user.name,
+      imageURL: this.props.data.user.imagepath,
+      email: this.props.data.user.email,
+      year: this.props.data.user.year,
+      branch: this.props.data.user.branch,
+      description: this.props.data.user.description,
+      enr_no: this.props.data.user.userid,
       editprofile: false,
       question: "",
       tag_string: "",
@@ -89,58 +89,71 @@ class MainScreen extends React.Component {
           upvotes: 10
         },
       ]
-		}
-	}
+    }
+  }
+
+  componentDidMount() {
+    console.log(" main : ", this.props.data.user)
+    this.setState({
+      name: this.props.data.user.name,
+      imageURL: this.props.data.user.imagepath,
+      email: this.props.data.user.email,
+      year: this.props.data.user.year,
+      branch: this.props.data.user.branch,
+      description: this.props.data.user.description,
+      enr_no: this.props.data.user.userid,
+    })
+  }
 
   onNameChange = (event) => {
     this.setState({ name: event.target.value })
   }
 
   onYearChange = (event) => {
-		this.setState({ year: event.target.value })
-	}
+    this.setState({ year: event.target.value })
+  }
 
   onBranchChange = (event) => {
-		this.setState({ branch: event.target.value })
-	}
+    this.setState({ branch: event.target.value })
+  }
 
   onDescriptionChange = (event) => {
     this.setState({ description: event.target.value })
   }
 
   onImagePathChange = (event) => {
-  	this.setState({ imageURL: event.target.value })
+    this.setState({ imageURL: event.target.value })
   }
 
   onProfileEditToggle = () => {
-    if(this.state.editprofile){
-      fetch('http://127.0.0.1:3001/update_details',{
-  			method: 'post',
-  			headers: {'Content-Type':'application/json'},
-  			body:JSON.stringify({
+    if (this.state.editprofile) {
+      fetch('http://127.0.0.1:3001/update_details', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           name: this.state.name,
-  				imagePath: this.state.imageURL,
+          imagePath: this.state.imageURL,
           year: this.state.year,
           branch: this.state.branch,
           description: this.state.description,
           userid: this.state.enr_no
-  			})
-  		})
-  			.then(response => response.json())
-  			.then(data => {
-  				if(data.status){
-  					alert("Updated Successfully!")
-  				}
-          else{
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status) {
+            alert("Updated Successfully!")
+          }
+          else {
             alert(data.data.message)
           }
-  			})
+        })
         .catch(err => {
           alert("Updation failed due to " + err)
         })
     }
     this.setState({ editprofile: !this.state.editprofile })
-	}
+  }
 
   onQuestionChange = (event) => {
     this.setState({ question: event.target.value })
@@ -179,10 +192,10 @@ class MainScreen extends React.Component {
   }
 
   postQuestion = () => {
-    fetch('http://127.0.0.1:3001/add_question',{
+    fetch('http://127.0.0.1:3001/add_question', {
       method: 'post',
-      headers: {'Content-Type':'application/json'},
-      body:JSON.stringify({
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         question: this.state.question,
         question_tags: this.state.tags_list,
         userid: this.state.enr_no
@@ -190,7 +203,7 @@ class MainScreen extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        if(data.status){
+        if (data.status) {
           alert("Posted Successfully!")
           this.setState({
             question: "",
@@ -198,7 +211,7 @@ class MainScreen extends React.Component {
             tag_str: ""
           })
         }
-        else{
+        else {
           alert(data.data.message)
         }
       })
@@ -212,13 +225,13 @@ class MainScreen extends React.Component {
   }
 
   searchQuestion = (event) => {
-    this.setState({searchQuestionByString: event.target.value})
+    this.setState({ searchQuestionByString: event.target.value })
   }
 
 
-	render(){
+  render() {
 
-  	const { onRouteChange } = this.props;
+    // const { onRouteChange } = this.props;
 
     var filteredQuestionList = this.state.questionsList.filter(question => {
       return question.question.toLowerCase().includes(this.state.searchQuestionByString.toLowerCase())
@@ -243,66 +256,66 @@ class MainScreen extends React.Component {
               </div>
             </div>
 
-          <img src = { this.state.imageURL === ""?profile:this.state.imageURL }
-           className="dib center w5 mv4 h5 br-100 pointer"
-           alt="profile pic" />
+            <img src={this.state.imageURL === "" ? profile : this.state.imageURL}
+              className="dib center w5 mv4 h5 br-100 pointer"
+              alt="profile pic" />
 
-          {
-            this.state.editprofile === true &&
-            <input id="image_id"
-    				className="v-mid f3 mv2 pa2" type="text"
-            placeholder="imagePath"
-            onChange={ this.onImagePathChange }
-    				value={this.state.imageURL} />
-          }
+            {
+              this.state.editprofile === true &&
+              <input id="image_id"
+                className="v-mid f3 mv2 pa2" type="text"
+                placeholder="imagePath"
+                onChange={this.onImagePathChange}
+                value={this.state.imageURL} />
+            }
 
-          {
-            this.state.editprofile === false?
-            <p className="v-mid f2"
-            style={{ fontFamily: 'Concert One' }}> {this.state.name}, {this.state.enr_no} </p>:
-            <input id="name_id"
-    				className="v-mid f3 mv2 pa2" type="text"
-            placeholder="name"
-            onChange={ this.onNameChange }
-    				value={this.state.name} />
-          }
+            {
+              this.state.editprofile === false ?
+                <p className="v-mid f2"
+                  style={{ fontFamily: 'Concert One' }}> {this.state.name}, {this.state.enr_no} </p> :
+                <input id="name_id"
+                  className="v-mid f3 mv2 pa2" type="text"
+                  placeholder="name"
+                  onChange={this.onNameChange}
+                  value={this.state.name} />
+            }
 
-          {
-            this.state.editprofile === false?
-            <p className="v-mid f3"
-            style={{ fontFamily: 'Concert One' }}> {this.state.year} year, {this.state.branch} </p>:
-            <div>
-              <input id="year_id"
-      				className="v-mid f3 mv2 pa2" type="number"
-              onChange={ this.onYearChange }
-              placeholder="year"
-      				value={this.state.year} />
-              <input id="branch_id"
-      				className="v-mid f3 mv2 pa2" type="text"
-              placeholder="branch"
-              onChange={ this.onBranchChange }
-      				value={this.state.branch} />
-            </div>
-          }
+            {
+              this.state.editprofile === false ?
+                <p className="v-mid f3"
+                  style={{ fontFamily: 'Concert One' }}> {this.state.year} year, {this.state.branch} </p> :
+                <div>
+                  <input id="year_id"
+                    className="v-mid f3 mv2 pa2" type="number"
+                    onChange={this.onYearChange}
+                    placeholder="year"
+                    value={this.state.year} />
+                  <input id="branch_id"
+                    className="v-mid f3 mv2 pa2" type="text"
+                    placeholder="branch"
+                    onChange={this.onBranchChange}
+                    value={this.state.branch} />
+                </div>
+            }
 
-          {
-            this.state.editprofile === false?
-            <p className="v-mid f3"
-            style={{ fontFamily: 'Concert One' }}> {this.state.description} </p>:
-            <input id="description_id"
-    				className="v-mid f3 mv2 pa2" type="text"
-            onChange={ this.onDescriptionChange }
-    				value={this.state.description} />
-          }
+            {
+              this.state.editprofile === false ?
+                <p className="v-mid f3"
+                  style={{ fontFamily: 'Concert One' }}> {this.state.description} </p> :
+                <input id="description_id"
+                  className="v-mid f3 mv2 pa2" type="text"
+                  onChange={this.onDescriptionChange}
+                  value={this.state.description} />
+            }
 
-          {
-            this.state.editprofile === true &&
+            {
+              this.state.editprofile === true &&
+              <p className="v-mid f3 mid-gray"
+                style={{ fontFamily: 'Concert One' }}>Enr. id: {this.state.enr_no} </p>
+            }
+
             <p className="v-mid f3 mid-gray"
-            style={{ fontFamily: 'Concert One' }}>Enr. id: {this.state.enr_no} </p>
-          }
-
-          <p className="v-mid f3 mid-gray"
-          style={{ fontFamily: 'Concert One' }}> {this.state.email} </p>
+              style={{ fontFamily: 'Concert One' }}> {this.state.email} </p>
 
             {
               this.state.editprofile === true &&
@@ -326,39 +339,39 @@ class MainScreen extends React.Component {
                 <button onClick={this.postQuestion}
                   style={{ fontFamily: 'Luckiest Guy' }}
                   className="input-reset w-10 bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Post</button>
-                  <Popup trigger={<button onClick={ this.addTags }
-                    style={{ fontFamily: 'Luckiest Guy' }}
-                    className="input-reset w-10 v-btm bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Add tags</button>}
-                    position="top center">
-                    <div>
-                      <input refs="newTag" type="text" className="w-100 f3 br3 input-reset ba b--black-20 pa2"
-                      onChange={ this.updateTagString }
-                      value={ this.state.tag_string }
-                      onKeyPress={ this.tagKeyPressed }/>
-                    </div>
-                  </Popup>
-                  <div className="pa2" style={{fontFamily: 'Bree Serif' }}>
-      							<Tags_list tags={ this.state.tags_list } removeTag={ this.removeTag.bind(this) }/>
-      						</div>
+                <Popup trigger={<button onClick={this.addTags}
+                  style={{ fontFamily: 'Luckiest Guy' }}
+                  className="input-reset w-10 v-btm bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Add tags</button>}
+                  position="top center">
+                  <div>
+                    <input refs="newTag" type="text" className="w-100 f3 br3 input-reset ba b--black-20 pa2"
+                      onChange={this.updateTagString}
+                      value={this.state.tag_string}
+                      onKeyPress={this.tagKeyPressed} />
+                  </div>
+                </Popup>
+                <div className="pa2" style={{ fontFamily: 'Bree Serif' }}>
+                  <Tags_list tags={this.state.tags_list} removeTag={this.removeTag.bind(this)} />
                 </div>
               </div>
+            </div>
 
-              <div className="w-100 pa3 tc bg-near-black br3 ma1">
-                <div className="dt w-100">
-                  <input id="srchQue" onChange={ this.searchQuestion } className="input-reset ba b--black-20 w-60 f4 dtc br3 pa3 border-box"
+            <div className="w-100 pa3 tc bg-near-black br3 ma1">
+              <div className="dt w-100">
+                <input id="srchQue" onChange={this.searchQuestion} className="input-reset ba b--black-20 w-60 f4 dtc br3 pa3 border-box"
                   type="text" placeholder='Search Question' />
-                  <div className="dtc w-40">
-                    <p className="f4 b white dib">Search by tags</p>
-                    <Switch onChange={this.handleChange} checked={this.state.checked} className="dib mt2"/>
-                  </div>
+                <div className="dtc w-40">
+                  <p className="f4 b white dib">Search by tags</p>
+                  <Switch onChange={this.handleChange} checked={this.state.checked} className="dib mt2" />
                 </div>
-                <Scroll>
-                  <div >
-                    <QuestionList questions={ filteredQuestionList } />
-                  </div>
-                </Scroll>
               </div>
-              
+              <Scroll>
+                <div >
+                  <QuestionList questions={filteredQuestionList} />
+                </div>
+              </Scroll>
+            </div>
+
           </div>
 
         </div>
