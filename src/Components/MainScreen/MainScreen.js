@@ -1,14 +1,11 @@
 import React from 'react';
 import Scroll from '../Scroll/Scroll';
 import Popup from 'reactjs-popup';
-import ReactDOM from 'react-dom';
 import Switch from "react-switch";
 import 'reactjs-popup/dist/index.css';
 import Tags_list from './Tags_list';
 import QuestionList from './Questions/QuestionList';
-import edit from './edit1.png'
-import profile from '../Signin/profile.svg';
-import signout from './signout.png'
+import ProfilePreview from './ProfilePreview';
 import { css } from 'glamor';
 import { zoomIn } from 'react-animations';
 import { fadeOut } from 'react-animations';
@@ -26,11 +23,6 @@ const styles = {
   }
 }
 
-const ROOT_CSS = css({
-  height: '1000',
-  background: "#FFDFDF"
-});
-
 
 class MainScreen extends React.Component {
 
@@ -38,7 +30,7 @@ class MainScreen extends React.Component {
     super(props);
     this.state = {
       name: this.props.data.user.name,
-      imageURL: this.props.data.user.profilepic,
+      imageURL: this.props.data.user.imagepath,
       email: this.props.data.user.email,
       year: this.props.data.user.year,
       branch: this.props.data.user.branch,
@@ -49,118 +41,57 @@ class MainScreen extends React.Component {
       tag_string: "",
       tags_list: [],
       searchQuestionByString: "",
-      searchQuestionByTag: "",
-      checked: false,
-      questionsList: [
-        {
-          question_id: 1,
-          username: "Hemant Yadav",
-          description: "Mobile and Web Developer",
-          que: "When we see something, it behaves differently, and when we do not see it, it behave differently. Is the world very mysterious? What do you know about Photon of Double Slit?What is one piece of simple advice that actually changed your life?",
-          upvotes: 5
-        },
-        {
-          question_id: 2,
-          username: "Ishaan Pandey",
-          description: "Quantum Computing Enthusiastic",
-          que: "What is the significance of major project in 4th year of engineering if one doesn't want to pursue an engineering job. Like what should one do in the major project if one just wants to get the engineering degree?",
-          upvotes: 3
-        },
-        {
-          question_id: 3,
-          username: "Devjit Meghani",
-          description: "BLockchain Enthusiastic",
-          que: "What is one piece of simple advice that actually changed your life?",
-          upvotes: 7
-        },
-        {
-          question_id: 4,
-          username: "Ashish Ucheniya",
-          description: "Mobile and Web Developer",
-          que: "How do I write some Python code that simulations the toss of a coin (0=heads and 1= tails)? How do I modify this code so that the user is asked if they want to toss again (Y/N)?",
-          upvotes: 5
-        },
-        {
-          question_id: 5,
-          username: "Ankit Aharwal",
-          description: "Mobile and Web Developer",
-          que: "Can TensorFlow lite C++ library be used to program a part of an Operating System since TensorFlow lite C++ library is used in programming microcontrollers?",
-          upvotes: 10
-        },
-      ]
-    }
+      checkedByTags: false,
+      questionsList: []
+		}
+	}
+
+  componentDidMount(){
+    this.requestQuestionsandUpvotes()
   }
 
-  componentDidMount() {
-    console.log(" main : ", this.props.data.user)
-    this.setState({
-      name: this.props.data.user.name,
-      imageURL: this.props.data.user.profilepic,
-      email: this.props.data.user.email,
-      year: this.props.data.user.year,
-      branch: this.props.data.user.branch,
-      description: this.props.data.user.description,
-      enr_no: this.props.data.user.userid,
+  requestQuestionsandUpvotes = () => {
+    console.log(this.state);
+    fetch('http://127.0.0.1:3001/get-questionList')
+    .then(response => response.json())
+    .then(data => {
+        if (data.status) {
+
+                fetch('http://127.0.0.1:3001/getLikedQuestions',{
+            			method: 'post',
+            			headers: {'Content-Type':'application/json'},
+            			body:JSON.stringify({
+                    userid: this.state.enr_no
+            			})
+            		})
+                .then(response => response.json())
+                .then(data1 => {
+
+                    if (data1.status) {
+                        var que_list = data.data.message;
+                        var likedQuestions = data1.data.message;
+                        for (var i = 0; i < que_list.length; i++) {
+                          que_list[i]["liked"] = likedQuestions.includes(que_list[i]["queid"])
+                          que_list[i]["currentuserid"] = this.state.enr_no
+                        }
+                        this.setState({questionsList: que_list})
+                    }
+                    else{
+                      alert("Error: " + data1.data.message)
+                    }
+                })
+                .catch(err1 => {
+                    alert("Error: " + err1)
+                });
+
+        }
+        else{
+            alert("Error: " + data.data.message)
+        }
     })
-    const self = this
-    fetch('http://127.0.0.1:3001/get-questionList/')
-      .then(resp => resp.json())
-      .then((data) => {
-        console.log(data)
-        self.setState({
-          questionsList: data
-        })
-      })
-  }
-
-  onNameChange = (event) => {
-    this.setState({ name: event.target.value })
-  }
-
-  onYearChange = (event) => {
-    this.setState({ year: event.target.value })
-  }
-
-  onBranchChange = (event) => {
-    this.setState({ branch: event.target.value })
-  }
-
-  onDescriptionChange = (event) => {
-    this.setState({ description: event.target.value })
-  }
-
-  onImagePathChange = (event) => {
-    this.setState({ imageURL: event.target.value })
-  }
-
-  onProfileEditToggle = () => {
-    if (this.state.editprofile) {
-      fetch('http://127.0.0.1:3001/update_details', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: this.state.name,
-          profilepic: this.state.imageURL,
-          year: this.state.year,
-          branch: this.state.branch,
-          description: this.state.description,
-          userid: this.state.enr_no
-        })
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.status) {
-            alert("Updated Successfully!")
-          }
-          else {
-            alert(data.data.message)
-          }
-        })
-        .catch(err => {
-          alert("Updation failed due to " + err)
-        })
-    }
-    this.setState({ editprofile: !this.state.editprofile })
+    .catch(err => {
+        alert("Error: " + err)
+    });
   }
 
   onQuestionChange = (event) => {
@@ -191,12 +122,9 @@ class MainScreen extends React.Component {
   }
 
   removeTag = (index) => {          // not complete
-    console.log("Index: ", index)
     const tag_arr = this.state.tags_list
     tag_arr.splice(index, 1)
-    console.log(tag_arr)
     this.setState({ tags_list: tag_arr })
-    console.log(this.state.tags_list)
   }
 
   postQuestion = () => {
@@ -218,6 +146,7 @@ class MainScreen extends React.Component {
             tags_list: [],
             tag_str: ""
           })
+          console.log(this.state.questionsList);
         }
         else {
           alert(data.data.message)
@@ -226,14 +155,17 @@ class MainScreen extends React.Component {
       .catch(err => {
         alert("Couldn't post the question due to following error: " + err)
       })
+
+    this.requestQuestionsandUpvotes()
   }
 
-  handleChange = () => {
-
+  handleTagSearchToggle = () => {
+    this.setState({checkedByTags: !this.state.checkedByTags})
   }
 
   searchQuestion = (event) => {
-    this.setState({ searchQuestionByString: event.target.value })
+    // this.forceUpdate();
+    this.setState({searchQuestionByString: event.target.value})
   }
 
 
@@ -241,9 +173,19 @@ class MainScreen extends React.Component {
 
     // const { onRouteChange } = this.props;
 
-    var filteredQuestionList = this.state.questionsList.filter(question => {
-      return question.que.toLowerCase().includes(this.state.searchQuestionByString.toLowerCase())
-    });
+    var filteredQuestionList = []
+    if(!this.state.checkedByTags){
+      filteredQuestionList = this.state.questionsList.filter(question => {
+        return question.que.toLowerCase().includes(this.state.searchQuestionByString.toLowerCase())
+      });
+    }
+    else{
+      filteredQuestionList = this.state.questionsList.filter(question => {
+        return question.tags.toLowerCase().includes(this.state.searchQuestionByString.toLowerCase())
+      });
+    }
+
+    console.log(filteredQuestionList);
 
     return (
 
@@ -251,89 +193,9 @@ class MainScreen extends React.Component {
 
         <div className="dt w-100 h-100 vh-100" style={styles.zoomIn}>
 
-          <div className="dtc w-30 ba b--black-20 center bg-light-yellow tc">
-
-            <div className="dt w-100 bg-near-black">
-              <div className="dtc v-mid mid-gray  w-25">
-                <p className="moon-gray v-mid pl4 tr f2-ns dib"
-                  style={{ fontFamily: 'Luckiest Guy' }}> WriteItOut </p>
-                <div className="fr dib tr v-mid f3 moon-gray pa3">
-                  <img className="dib w2 v-mid h2 ma3 pointer" src={edit} onClick={this.onProfileEditToggle} alt="editprofile" />
-                  <img className="dib w2 v-mid h2 ma3 pointer" src={signout} onClick={() => { console.log('signout') }} alt="logout" />
-                </div>
-              </div>
-            </div>
-
-            <img src={this.state.imageURL ? this.state.imageURL : profile}
-              className="dib center w5 mv4 h5 br-100 pointer"
-              alt="profile pic" />
-
-            {
-              this.state.editprofile === true &&
-              <input id="image_id"
-                className="v-mid f3 mv2 pa2" type="text"
-                placeholder="imagePath"
-                onChange={this.onImagePathChange}
-                value={this.state.imageURL} />
-            }
-
-            {
-              this.state.editprofile === false ?
-                <p className="v-mid f2"
-                  style={{ fontFamily: 'Concert One' }}> {this.state.name}, {this.state.enr_no} </p> :
-                <input id="name_id"
-                  className="v-mid f3 mv2 pa2" type="text"
-                  placeholder="name"
-                  onChange={this.onNameChange}
-                  value={this.state.name} />
-            }
-
-            {
-              this.state.editprofile === false ?
-                <p className="v-mid f3"
-                  style={{ fontFamily: 'Concert One' }}> {this.state.year} year, {this.state.branch} </p> :
-                <div>
-                  <input id="year_id"
-                    className="v-mid f3 mv2 pa2" type="number"
-                    onChange={this.onYearChange}
-                    placeholder="year"
-                    value={this.state.year} />
-                  <input id="branch_id"
-                    className="v-mid f3 mv2 pa2" type="text"
-                    placeholder="branch"
-                    onChange={this.onBranchChange}
-                    value={this.state.branch} />
-                </div>
-            }
-
-            {
-              this.state.editprofile === false ?
-                <p className="v-mid f3"
-                  style={{ fontFamily: 'Concert One' }}> {this.state.description} </p> :
-                <input id="description_id"
-                  className="v-mid f3 mv2 pa2" type="text"
-                  onChange={this.onDescriptionChange}
-                  value={this.state.description} />
-            }
-
-            {
-              this.state.editprofile === true &&
-              <p className="v-mid f3 mid-gray"
-                style={{ fontFamily: 'Concert One' }}>Enr. id: {this.state.enr_no} </p>
-            }
-
-            <p className="v-mid f3 mid-gray"
-              style={{ fontFamily: 'Concert One' }}> {this.state.email} </p>
-
-            {
-              this.state.editprofile === true &&
-              <input className="input-reset tc white f6 b ttu mv2 w-50 pa3 pointer bg-black hover-bg-near-black bn br-pill"
-                value="Submit"
-                onClick={this.onProfileEditToggle}
-                type="submit" />
-            }
-
-          </div>
+        <div className="dtc w-30 ba b--black-20 center bg-light-yellow tc">
+  			   <ProfilePreview name={ this.state.name } year={ this.state.year } userid={ this.state.enr_no } branch={ this.state.branch } description={ this.state.description } imagepath={ this.state.imageURL } email={ this.state.email }/>
+        </div>
 
           <div className="dtc w-70 bg-near-white v-top" >
 
@@ -365,19 +227,19 @@ class MainScreen extends React.Component {
             </div>
 
             <div className="w-100 pa3 tc bg-near-black br3 ma1">
-              <div className="dt w-100">
-                <input id="srchQue" onChange={this.searchQuestion} className="input-reset ba b--black-20 w-60 f4 dtc br3 pa3 border-box"
-                  type="text" placeholder='Search Question' />
-                <div className="dtc w-40">
-                  <p className="f4 b white dib">Search by tags</p>
-                  <Switch onChange={this.handleChange} checked={this.state.checked} className="dib mt2" />
-                </div>
+              <div className="w-100 tl">
+                <input id="srchQue" onChange={ this.searchQuestion } className="input-reset ba b--black-20 w-80 f4 dib br3 pa3 border-box"
+                type="text" placeholder='Search Question' />
+                <p className="f4 b white dib ml2">Search by tags</p>
+                <Switch onChange={this.handleTagSearchToggle} checked={this.state.checkedByTags} className="dib ml3 mt3"/>
               </div>
+              <div className="mt2">
               <Scroll>
                 <div >
-                  <QuestionList questions={filteredQuestionList} />
+                  <QuestionList questions={ filteredQuestionList } />
                 </div>
               </Scroll>
+              </div>
             </div>
 
           </div>

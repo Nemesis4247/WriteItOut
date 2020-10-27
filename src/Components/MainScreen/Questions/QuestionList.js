@@ -13,12 +13,16 @@ class QuestionList extends React.Component {
       return (
         <Question
           key={i}
-					question_id={this.props.questions[i].question_id}
-          question={this.props.questions[i].question}
-					liked={false}
+					question_id={this.props.questions[i].queid}
+          question={this.props.questions[i].que}
+					liked={this.props.questions[i].liked}
 					description={this.props.questions[i].description}
-          username={this.props.questions[i].username}
+          username={this.props.questions[i].name}
           upvotes={this.props.questions[i].upvotes}
+					userid={this.props.questions[i].userid}
+					currentuserid={this.props.questions[i].currentuserid}
+					imagepath={this.props.questions[i].imagepath}
+					datetime={this.props.questions[i].datetime}
         />
       );
     });

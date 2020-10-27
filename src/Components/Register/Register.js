@@ -1,12 +1,8 @@
 import React from 'react';
-import logo from '../Signin/profile.svg';
-import key from '../Signin/key.svg';
 import fb from '../Signin/fb.svg';
 import ins from '../Signin/ins.svg';
 import go from '../Signin/goo.svg';
 import chico from '../Signin/chico.png';
-import mail from './mail.svg';
-import link from './link.svg';
 import { zoomIn } from 'react-animations';
 import Radium, { StyleRoot } from 'radium';
 import { NavLink, withRouter } from 'react-router-dom';

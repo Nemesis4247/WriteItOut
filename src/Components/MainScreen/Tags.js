@@ -22,7 +22,7 @@ render(){
 		  		<p className="black dib mh1 v-mid">
 		  			{this.state.tag}
 		  		</p>
-					<img className="h1 w1 dib ml1 v-mid" src={ cancel } onClick={ this.cancelItem }/>
+					<img className="h1 w1 dib ml1 v-mid" src={ cancel } alt="cancel" onClick={ this.cancelItem }/>
 			</div>
 		);
 	}
