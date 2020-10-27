@@ -110,7 +110,7 @@ class ProfilePreview extends React.Component {
           {
             this.state.editprofile === false ?
               <p className="v-mid f2 mv4"
-                style={{ fontFamily: 'Concert One' }}> {this.state.name}, {this.state.enr_no} </p> :
+                style={{ fontFamily: 'Abril Fatface' }}> {this.state.name}, {this.state.enr_no} </p> :
               <input id="name_id"
                 className="v-mid f3 mv2 pa2" type="text"
                 placeholder="name"
@@ -121,7 +121,7 @@ class ProfilePreview extends React.Component {
           {
             this.state.editprofile === false ?
               <p className="v-mid f3 mv4"
-                style={{ fontFamily: 'Concert One' }}> {this.state.year} year, {this.state.branch} </p> :
+                style={{ fontFamily: 'Abril Fatface' }}> {this.state.year} year, {this.state.branch} </p> :
               <div>
                 <input id="year_id"
                   className="v-mid f3 mv2 pa2" type="number"
@@ -139,7 +139,7 @@ class ProfilePreview extends React.Component {
           {
             this.state.editprofile === false ?
               <p className="v-mid f3 mv4"
-                style={{ fontFamily: 'Concert One' }}> {this.state.description} </p> :
+                style={{ fontFamily: 'Abril Fatface' }}> {this.state.description} </p> :
               <input id="description_id"
                 className="v-mid f3 mv2 pa2" type="text"
                 onChange={this.onDescriptionChange}
@@ -149,11 +149,11 @@ class ProfilePreview extends React.Component {
           {
             this.state.editprofile === true &&
             <p className="v-mid f3 mid-gray"
-              style={{ fontFamily: 'Concert One' }}>Enr. id: {this.state.enr_no} </p>
+              style={{ fontFamily: 'Abril Fatface' }}>Enr. id: {this.state.enr_no} </p>
           }
 
           <p className="v-mid f3 mid-gray mt2 mb2"
-            style={{ fontFamily: 'Concert One' }}> {this.state.email} </p>
+            style={{ fontFamily: 'Abril Fatface' }}> {this.state.email} </p>
 
           {
             this.state.editprofile === true &&

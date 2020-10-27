@@ -80,37 +80,31 @@ class Question extends React.Component {
       <StyleRoot>
         <div className="w-100 mv2 bg-moon-gray v-mid br3 ph2 pointer" onClick={this.openQuestion}>
           <Popup trigger={<div className="dt pa2">
-            <div className="dtc pa1 v-mid dim" onClick={(e) => {
-              // e.stopPropagation();
-              this.openOtherUserProfile();
-            }}>
+            <div className="dtc pa1 v-mid dim" onClick={ this.openOtherUserProfile }>
               <img className="dtc br-100 fc h3 w3" src={this.state.imageURL ?
                 this.state.imageURL : profile} alt="profilePic" />
             </div>
-            <div className="dtc tl dim" onClick={(e) => {
-              // e.stopPropagation();
-              this.openOtherUserProfile();
-            }}>
+            <div className="dtc tl dim" onClick={ this.openOtherUserProfile }>
               <p className="f5 ma2" style={{ fontFamily: 'Acme' }}> <strong> {this.state.name}</strong> <br /> {this.state.description} <br /> {this.state.datetime}</p>
             </div>
           </div>} modal >
-            <div className="w-100 ba b--black-20 center bg-light-yellow tc">
+            <div className="w-100 ba b--black-20 center bg-light-blue tc pa4">
 
               <img src={this.state.imageURL ? this.state.imageURL : profile}
                 className="dib center w5 mv4 h5 br-100 pointer"
                 alt="profile pic" />
 
-              <p className="v-mid f2"
-                style={{ fontFamily: 'Concert One' }}> {this.state.name}, {this.state.userid} </p>
+              <p className="v-mid f2 mv2"
+                style={{ fontFamily: 'Abril Fatface' }}> {this.state.name}, {this.state.userid} </p>
 
-              <p className="v-mid f3"
-                style={{ fontFamily: 'Concert One' }}> {this.state.year} year, {this.state.branch} </p>
+              <p className="v-mid f3 mv2"
+                style={{ fontFamily: 'Abril Fatface' }}> {this.state.year} year, {this.state.branch} </p>
 
-              <p className="v-mid f3"
-                style={{ fontFamily: 'Concert One' }}> {this.state.description} </p>
+              <p className="v-mid f3 mv2"
+                style={{ fontFamily: 'Abril Fatface' }}> {this.state.description} </p>
 
-              <p className="v-mid f3 mid-gray"
-                style={{ fontFamily: 'Concert One' }}> {this.state.email} </p>
+              <p className="v-mid f3 mid-gray mv2"
+                style={{ fontFamily: 'Abril Fatface' }}> {this.state.email} </p>
 
             </div>
           </Popup>

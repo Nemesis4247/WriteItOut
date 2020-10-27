@@ -51,8 +51,8 @@ class Signin extends React.Component {
 			method: 'post',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				email: this.state.signInEmail,
-				password: this.state.signInPassword
+				email: "clay@gmail.com",
+				password: "clay@jensen"
 			})
 		})
 			.then(response => response.json())
