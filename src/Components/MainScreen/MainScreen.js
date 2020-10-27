@@ -42,48 +42,17 @@ class MainScreen extends React.Component {
       tags_list: [],
       searchQuestionByString: "",
       checkedByTags: false,
-      questionsList: []
+      questionsList: [],
+      displayQuestionList: []
 		}
 	}
 
   componentDidMount(){
-    this.requestQuestionsandUpvotes()
-  }
-
-  requestQuestionsandUpvotes = () => {
-    console.log(this.state);
     fetch('http://127.0.0.1:3001/get-questionList')
-    .then(response => response.json())
-    .then(data => {
-        if (data.status) {
-
-                fetch('http://127.0.0.1:3001/getLikedQuestions',{
-            			method: 'post',
-            			headers: {'Content-Type':'application/json'},
-            			body:JSON.stringify({
-                    userid: this.state.enr_no
-            			})
-            		})
-                .then(response => response.json())
-                .then(data1 => {
-
-                    if (data1.status) {
-                        var que_list = data.data.message;
-                        var likedQuestions = data1.data.message;
-                        for (var i = 0; i < que_list.length; i++) {
-                          que_list[i]["liked"] = likedQuestions.includes(que_list[i]["queid"])
-                          que_list[i]["currentuserid"] = this.state.enr_no
-                        }
-                        this.setState({questionsList: que_list})
-                    }
-                    else{
-                      alert("Error: " + data1.data.message)
-                    }
-                })
-                .catch(err1 => {
-                    alert("Error: " + err1)
-                });
-
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.status) {;
+          this.requestQuestionsandUpvotes(data.data.message)
         }
         else{
             alert("Error: " + data.data.message)
@@ -92,6 +61,35 @@ class MainScreen extends React.Component {
     .catch(err => {
         alert("Error: " + err)
     });
+  }
+
+  requestQuestionsandUpvotes = (que_list) => {
+      fetch('http://127.0.0.1:3001/getLikedQuestions',{
+  			method: 'post',
+  			headers: {'Content-Type':'application/json'},
+  			body:JSON.stringify({
+          userid: this.state.enr_no
+  			})
+  		})
+      .then((response) => response.json())
+      .then((data1) => {
+
+          if (data1.status) {
+              var likedQuestions = data1.data.message;
+              for (var i = 0; i < que_list.length; i++) {
+                que_list[i]["liked"] = likedQuestions.includes(que_list[i]["queid"])
+                que_list[i]["currentuserid"] = this.state.enr_no
+              }
+              this.setState({questionsList: que_list})
+          }
+          else{
+            alert("Error: " + data1.data.message)
+          }
+      })
+      .catch(err1 => {
+          alert("Error: " + err1)
+      });
+
   }
 
   onQuestionChange = (event) => {
@@ -146,7 +144,7 @@ class MainScreen extends React.Component {
             tags_list: [],
             tag_str: ""
           })
-          console.log(this.state.questionsList);
+          this.requestQuestionsandUpvotes(data.data.message);
         }
         else {
           alert(data.data.message)
@@ -155,8 +153,6 @@ class MainScreen extends React.Component {
       .catch(err => {
         alert("Couldn't post the question due to following error: " + err)
       })
-
-    this.requestQuestionsandUpvotes()
   }
 
   handleTagSearchToggle = () => {
@@ -164,14 +160,11 @@ class MainScreen extends React.Component {
   }
 
   searchQuestion = (event) => {
-    // this.forceUpdate();
     this.setState({searchQuestionByString: event.target.value})
   }
 
 
   render() {
-
-    // const { onRouteChange } = this.props;
 
     var filteredQuestionList = []
     if(!this.state.checkedByTags){
@@ -184,8 +177,6 @@ class MainScreen extends React.Component {
         return question.tags.toLowerCase().includes(this.state.searchQuestionByString.toLowerCase())
       });
     }
-
-    console.log(filteredQuestionList);
 
     return (
 
@@ -204,6 +195,7 @@ class MainScreen extends React.Component {
               <div className="dtc mid-gray pa1">
                 <input placeholder="Write your question here" type="text"
                   onChange={this.onQuestionChange}
+                  value={this.state.question}
                   style={{ fontFamily: 'Josefin Sans' }}
                   className="w-100 f4 br3 h4 input-reset ba b--black-20 mr3 pv3 ph3" />
                 <button onClick={this.postQuestion}

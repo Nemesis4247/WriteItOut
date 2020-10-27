@@ -44,7 +44,6 @@ class App extends Component {
       },
       isLoggedin: true
     })
-    console.log("app js load user : ", this.state.user);
   }
 
   render() {

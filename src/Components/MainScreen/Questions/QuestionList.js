@@ -8,21 +8,20 @@ class QuestionList extends React.Component {
 	}
 
 	render() {
-		var size = this.props.questions.length;
-    var questionComponent = this.props.questions.map((question, i) => {
+    const questionComponent = this.props.questions.map((question, i) => {
       return (
         <Question
           key={i}
-					question_id={this.props.questions[i].queid}
-          question={this.props.questions[i].que}
-					liked={this.props.questions[i].liked}
-					description={this.props.questions[i].description}
-          username={this.props.questions[i].name}
-          upvotes={this.props.questions[i].upvotes}
-					userid={this.props.questions[i].userid}
-					currentuserid={this.props.questions[i].currentuserid}
-					imagepath={this.props.questions[i].imagepath}
-					datetime={this.props.questions[i].datetime}
+					question_id={question.queid}
+          question={question.que}
+					liked={question.liked}
+					description={question.description}
+          username={question.name}
+          upvotes={question.upvotes}
+					userid={question.userid}
+					currentuserid={question.currentuserid}
+					imagepath={question.imagepath}
+					datetime={question.datetime}
         />
       );
     });

@@ -18,11 +18,11 @@ class Tags extends React.Component {
 
 render(){
 	return (
-			<div className="dib bg-washed-red mh2 v-mid br3 ph2">
-		  		<p className="black dib mh1 v-mid">
+			<div className="dib bg-washed-red mh2 mt1 v-mid br3 pa2 fl">
+		  		<p className="black dib mh1 v-mid f4 ma1">
 		  			{this.state.tag}
 		  		</p>
-					<img className="h1 w1 dib ml1 v-mid" src={ cancel } alt="cancel" onClick={ this.cancelItem }/>
+					<img className="h1 w1 dib ml1 v-mid dim pointer" src={ cancel } alt="cancel" onClick={ this.cancelItem }/>
 			</div>
 		);
 	}

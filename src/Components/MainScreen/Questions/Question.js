@@ -8,6 +8,7 @@ class Question extends React.Component {
 
 	constructor(props){
 		super(props);
+		console.log("Question: ", props);
 		this.state = {
 			question_id: this.props.question_id,
 			question: this.props.question,
