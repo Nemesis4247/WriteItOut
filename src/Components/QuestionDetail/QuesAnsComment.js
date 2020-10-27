@@ -49,6 +49,8 @@ export default function QuesAnsComment(props) {
                             return <Answer
                                 ansid={answer.ansid}
                                 userid={props.data.userid}
+                                name={answer.name}
+                                bio={answer.description}
                                 body={answer.ans}
                                 datetime={answer.datetime}
                                 upvotes={answer.upvotes}

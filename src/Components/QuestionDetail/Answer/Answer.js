@@ -45,8 +45,8 @@ export default function Answer(props) {
             <div id={styles.profile}>
                 <img src={Profile} id={styles.photo} />
                 <div id={styles.bio}>
-                    <h5>FirstName LastName</h5>
-                    <p>This is the bio</p>
+                    <h4>{props.name}</h4>
+                    <p>{props.bio}</p>
                 </div>
             </div>
             <div id={styles.datetime}>Answered {props.datetime}</div>
@@ -88,6 +88,9 @@ export default function Answer(props) {
             </div>
             {props.comments.map(comment => {
                 return <Comment
+                    profilepic={comment.profilepic}
+                    name={comment.name}
+                    bio={comment.description}
                     body={comment.comment}
                     datetime={comment.datetime}
                 />
