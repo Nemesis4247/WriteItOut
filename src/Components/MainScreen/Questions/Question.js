@@ -10,13 +10,14 @@ import { withRouter } from 'react-router-dom';
 
 class Question extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      question_id: this.props.question_id,
-      question: this.props.question,
-      name: this.props.username,
-      description: this.props.description,
+	constructor(props){
+		super(props);
+		console.log("Question: ", props);
+		this.state = {
+			question_id: this.props.question_id,
+			question: this.props.question,
+			name: this.props.username,
+			description: this.props.description,
       upvotes: this.props.upvotes,
       imageURL: this.props.imagepath,
       userid: this.props.userid,

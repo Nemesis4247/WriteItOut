@@ -45,7 +45,6 @@ class App extends Component {
       },
       isLoggedin: !self.state.isLoggedin
     })
-    console.log("app js load user : ", this.state.user);
   }
 
   render() {
