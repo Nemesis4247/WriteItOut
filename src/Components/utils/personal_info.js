@@ -4,6 +4,7 @@ import { css } from 'glamor';
 import profile_image from '../Signin/profile.svg';
 import signout from '../MainScreen/signout.png';
 import edit from '../MainScreen/edit1.png';
+import { withRouter } from 'react-router-dom';
 
 const ROOT_CSS = css({
     height: '1000',
@@ -16,7 +17,7 @@ class Personal_info extends React.Component {
         super(props);
         this.state = {
             name: this.props.data.name,
-            imageURL: this.props.data.profilepic,
+            imageURL: this.props.data.imagepath,
             email: this.props.data.email,
             year: this.props.data.year,
             branch: this.props.data.branch,
@@ -81,7 +82,11 @@ class Personal_info extends React.Component {
     handleChange = () => {
 
     }
-
+    logout = () => {
+        const { history } = this.props;
+        // this.props.loaduser({});
+        history.push('/');
+    }
 
     render() {
 
@@ -89,12 +94,12 @@ class Personal_info extends React.Component {
             <div className="dtc w-30 ba b--black-20 center bg-light-yellow tc h-100">
 
                 <div className="dt w-100 bg-near-black">
-                    <div className="dtc v-mid mid-gray  w-25">
-                        <p className="moon-gray v-mid pl4 tr f2-ns dib"
+                    <div className="dtc v-mid mid-gray w-25">
+                        <p className="moon-gray v-mid pl4 tr f2-ns dib mt4"
                             style={{ fontFamily: 'Luckiest Guy' }}> WriteItOut </p>
                         <div className="fr dib tr v-mid f3 moon-gray pa3">
                             <img className="dib w2 v-mid h2 ma3 pointer" src={edit} onClick={this.onProfileEditToggle} alt="editprofile" />
-                            <img className="dib w2 v-mid h2 ma3 pointer" src={signout} onClick={() => { console.log('signout') }} alt="logout" />
+                            <img className="dib w2 v-mid h2 ma3 pointer" src={signout} onClick={this.logout} alt="logout" />
                         </div>
                     </div>
                 </div>
@@ -114,7 +119,7 @@ class Personal_info extends React.Component {
 
                 {
                     this.state.editprofile === false ?
-                        <p className="v-mid f2"
+                        <p className="v-mid f2 mv4"
                             style={{ fontFamily: 'Concert One' }}> {this.state.name}, {this.state.enr_no} </p> :
                         <input id="name_id"
                             className="v-mid f3 mv2 pa2" type="text"
@@ -125,7 +130,7 @@ class Personal_info extends React.Component {
 
                 {
                     this.state.editprofile === false ?
-                        <p className="v-mid f3"
+                        <p className="v-mid f3 mv4"
                             style={{ fontFamily: 'Concert One' }}> {this.state.year} year, {this.state.branch} </p> :
                         <div>
                             <input id="year_id"
@@ -143,7 +148,7 @@ class Personal_info extends React.Component {
 
                 {
                     this.state.editprofile === false ?
-                        <p className="v-mid f3"
+                        <p className="v-mid f3 mv4"
                             style={{ fontFamily: 'Concert One' }}> {this.state.description} </p> :
                         <input id="description_id"
                             className="v-mid f3 mv2 pa2" type="text"
@@ -157,7 +162,7 @@ class Personal_info extends React.Component {
                         style={{ fontFamily: 'Concert One' }}>Enr. id: {this.state.enr_no} </p>
                 }
 
-                <p className="v-mid f3 mid-gray"
+                <p className="v-mid f3 mid-gray mt2 mb2"
                     style={{ fontFamily: 'Concert One' }}> {this.state.email} </p>
 
                 {
@@ -173,4 +178,4 @@ class Personal_info extends React.Component {
     }
 }
 
-export default Personal_info;
+export default withRouter(Personal_info);

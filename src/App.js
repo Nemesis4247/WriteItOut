@@ -32,6 +32,7 @@ class App extends Component {
   }
 
   loadUser = (data) => {
+    const self = this;
     this.setState({
       user: {
         'name': data.name,
@@ -42,7 +43,7 @@ class App extends Component {
         'branch': data.branch,
         'description': data.description
       },
-      isLoggedin: true
+      isLoggedin: !self.state.isLoggedin
     })
     console.log("app js load user : ", this.state.user);
   }
@@ -56,7 +57,7 @@ class App extends Component {
               <Profile data={this.state} />
             </Route>
             <Route path="/home">
-              <MainScreen data={this.state} />
+              <MainScreen data={this.state} loadUser={this.loadUser} />
             </Route>
             <Route path="/register">
               <Register loadUser={this.loadUser} />

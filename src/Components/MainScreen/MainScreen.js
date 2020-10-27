@@ -43,55 +43,55 @@ class MainScreen extends React.Component {
       searchQuestionByString: "",
       checkedByTags: false,
       questionsList: []
-		}
-	}
+    }
+  }
 
-  componentDidMount(){
+  componentDidMount() {
     this.requestQuestionsandUpvotes()
   }
 
   requestQuestionsandUpvotes = () => {
     console.log(this.state);
     fetch('http://127.0.0.1:3001/get-questionList')
-    .then(response => response.json())
-    .then(data => {
+      .then(response => response.json())
+      .then(data => {
         if (data.status) {
 
-                fetch('http://127.0.0.1:3001/getLikedQuestions',{
-            			method: 'post',
-            			headers: {'Content-Type':'application/json'},
-            			body:JSON.stringify({
-                    userid: this.state.enr_no
-            			})
-            		})
-                .then(response => response.json())
-                .then(data1 => {
+          fetch('http://127.0.0.1:3001/getLikedQuestions', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userid: this.state.enr_no
+            })
+          })
+            .then(response => response.json())
+            .then(data1 => {
 
-                    if (data1.status) {
-                        var que_list = data.data.message;
-                        var likedQuestions = data1.data.message;
-                        for (var i = 0; i < que_list.length; i++) {
-                          que_list[i]["liked"] = likedQuestions.includes(que_list[i]["queid"])
-                          que_list[i]["currentuserid"] = this.state.enr_no
-                        }
-                        this.setState({questionsList: que_list})
-                    }
-                    else{
-                      alert("Error: " + data1.data.message)
-                    }
-                })
-                .catch(err1 => {
-                    alert("Error: " + err1)
-                });
+              if (data1.status) {
+                var que_list = data.data.message;
+                var likedQuestions = data1.data.message;
+                for (var i = 0; i < que_list.length; i++) {
+                  que_list[i]["liked"] = likedQuestions.includes(que_list[i]["queid"])
+                  que_list[i]["currentuserid"] = this.state.enr_no
+                }
+                this.setState({ questionsList: que_list })
+              }
+              else {
+                alert("Error: " + data1.data.message)
+              }
+            })
+            .catch(err1 => {
+              alert("Error: " + err1)
+            });
 
         }
-        else{
-            alert("Error: " + data.data.message)
+        else {
+          alert("Error: " + data.data.message)
         }
-    })
-    .catch(err => {
+      })
+      .catch(err => {
         alert("Error: " + err)
-    });
+      });
   }
 
   onQuestionChange = (event) => {
@@ -160,12 +160,12 @@ class MainScreen extends React.Component {
   }
 
   handleTagSearchToggle = () => {
-    this.setState({checkedByTags: !this.state.checkedByTags})
+    this.setState({ checkedByTags: !this.state.checkedByTags })
   }
 
   searchQuestion = (event) => {
     // this.forceUpdate();
-    this.setState({searchQuestionByString: event.target.value})
+    this.setState({ searchQuestionByString: event.target.value })
   }
 
 
@@ -174,12 +174,12 @@ class MainScreen extends React.Component {
     // const { onRouteChange } = this.props;
 
     var filteredQuestionList = []
-    if(!this.state.checkedByTags){
+    if (!this.state.checkedByTags) {
       filteredQuestionList = this.state.questionsList.filter(question => {
         return question.que.toLowerCase().includes(this.state.searchQuestionByString.toLowerCase())
       });
     }
-    else{
+    else {
       filteredQuestionList = this.state.questionsList.filter(question => {
         return question.tags.toLowerCase().includes(this.state.searchQuestionByString.toLowerCase())
       });
@@ -193,9 +193,18 @@ class MainScreen extends React.Component {
 
         <div className="dt w-100 h-100 vh-100" style={styles.zoomIn}>
 
-        <div className="dtc w-30 ba b--black-20 center bg-light-yellow tc">
-  			   <ProfilePreview name={ this.state.name } year={ this.state.year } userid={ this.state.enr_no } branch={ this.state.branch } description={ this.state.description } imagepath={ this.state.imageURL } email={ this.state.email }/>
-        </div>
+          <div className="dtc w-30 ba b--black-20 center bg-light-yellow tc">
+            <ProfilePreview
+              name={this.state.name}
+              year={this.state.year}
+              userid={this.state.enr_no}
+              branch={this.state.branch}
+              description={this.state.description}
+              imagepath={this.state.imageURL}
+              email={this.state.email}
+              loaduser={this.props.loaduser}
+            />
+          </div>
 
           <div className="dtc w-70 bg-near-white v-top" >
 
@@ -228,17 +237,17 @@ class MainScreen extends React.Component {
 
             <div className="w-100 pa3 tc bg-near-black br3 ma1">
               <div className="w-100 tl">
-                <input id="srchQue" onChange={ this.searchQuestion } className="input-reset ba b--black-20 w-80 f4 dib br3 pa3 border-box"
-                type="text" placeholder='Search Question' />
+                <input id="srchQue" onChange={this.searchQuestion} className="input-reset ba b--black-20 w-80 f4 dib br3 pa3 border-box"
+                  type="text" placeholder='Search Question' />
                 <p className="f4 b white dib ml2">Search by tags</p>
-                <Switch onChange={this.handleTagSearchToggle} checked={this.state.checkedByTags} className="dib ml3 mt3"/>
+                <Switch onChange={this.handleTagSearchToggle} checked={this.state.checkedByTags} className="dib ml3 mt3" />
               </div>
               <div className="mt2">
-              <Scroll>
-                <div >
-                  <QuestionList questions={ filteredQuestionList } />
-                </div>
-              </Scroll>
+                <Scroll>
+                  <div >
+                    <QuestionList questions={filteredQuestionList} />
+                  </div>
+                </Scroll>
               </div>
             </div>
 
