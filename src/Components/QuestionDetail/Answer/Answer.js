@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './Answer.module.css'
 import Profile from '../../Signin/chico.png';
 import Comment from '../Comment/Comment'
-import Like from 'C:/Users/devji/Desktop/DBMS Project/WriteItOut/src/Components/MainScreen/Questions/like.png'
-import Liked from 'C:/Users/devji/Desktop/DBMS Project/WriteItOut/src/Components/MainScreen/Questions/liked.png'
+import Like from '../../MainScreen/Questions/like.png'
+import Liked from '../../MainScreen/Questions/liked.png'
 
 export default function Answer(props) {
     const [liked, setLiked] = useState(false)
@@ -21,7 +21,7 @@ export default function Answer(props) {
 
     function handleLike() {
         setLiked(!liked)
-        fetch('http://127.0.0.1:3001/likeUnlikeAnswer', {
+        fetch('http://127.0.0.1:3001/likeUnlikeAnswer/', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
