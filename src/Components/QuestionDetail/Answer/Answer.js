@@ -2,23 +2,40 @@ import React, { useEffect, useState } from 'react';
 import styles from './Answer.module.css'
 import Profile from '../../Signin/chico.png';
 import Comment from '../Comment/Comment'
+import Like from 'C:/Users/devji/Desktop/DBMS Project/WriteItOut/src/Components/MainScreen/Questions/like.png'
+import Liked from 'C:/Users/devji/Desktop/DBMS Project/WriteItOut/src/Components/MainScreen/Questions/liked.png'
 
 export default function Answer(props) {
     const [liked, setLiked] = useState(false)
-    const [upvoteBG, setUpvoteBG] = useState('white')
-    const [upvoteTextColor, setUpvoteTextColor] = useState('black')
+    const [likedIcon, setLikedIcon] = useState(Like)
     const [commentText, setCommentText] = useState('')
 
     useEffect(() => {
         if (liked) {
-            setUpvoteBG('deepskyblue')
-            setUpvoteTextColor('white')
+            setLikedIcon(Liked)
         }
         else {
-            setUpvoteBG('white')
-            setUpvoteTextColor('black')
+            setLikedIcon(Like)
         }
     }, [liked])
+
+    function handleLike() {
+        setLiked(!liked)
+        fetch('http://127.0.0.1:3001/likeUnlikeAnswer', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: {
+                userid: props.userid,
+                ansid: props.ansid,
+                like: liked ? 1 : 0
+            }
+        })
+            .then(response => {
+                if (!response.ok) setLiked(!liked)
+            })
+    }
 
     function addComment() {
         fetch('http://127.0.0.1:3001/comment', {
@@ -45,26 +62,21 @@ export default function Answer(props) {
             <div id={styles.profile}>
                 <img src={Profile} id={styles.photo} />
                 <div id={styles.bio}>
-                    <h5>FirstName LastName</h5>
-                    <p>This is the bio</p>
+                    <h4>{props.name}</h4>
+                    <p>{props.bio}</p>
                 </div>
             </div>
             <div id={styles.datetime}>Answered {props.datetime}</div>
             <div id={styles.body}>
                 {props.body}
             </div>
-            <div>
-                <button
-                    id={styles.upvoteButton}
-                    style={{
-                        backgroundColor: upvoteBG,
-                        color: upvoteTextColor,
-                    }}
-                    onClick={() => setLiked(!liked)}
-                >
-                    Upvote
-                </button>
-                {props.upvotes} upvotes
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <img
+                    height='30px'
+                    src={likedIcon}
+                    onClick={handleLike}
+                />
+                <p style={{ marginLeft: '5px' }}>{props.upvotes} upvotes</p>
             </div>
             <div id={styles.comment}>
                 <img src={Profile} id={styles.commenterPhoto} />
@@ -88,6 +100,9 @@ export default function Answer(props) {
             </div>
             {props.comments.map(comment => {
                 return <Comment
+                    profilepic={comment.profilepic}
+                    name={comment.name}
+                    bio={comment.description}
                     body={comment.comment}
                     datetime={comment.datetime}
                 />
