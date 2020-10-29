@@ -11,6 +11,27 @@ export default function Answer(props) {
     const [commentText, setCommentText] = useState('')
 
     useEffect(() => {
+        const fetcher = () => {
+            fetch('http://127.0.0.1:3001/getLikedAnswers', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    userid: props.userid
+                }
+            })
+                .then(response => response.json())
+                .then(json => {
+                    if (json.status) {
+                        setLiked(json.data.message.includes(props.ansid))
+                    }
+                })
+        }
+        fetcher()
+    }, [])
+
+    useEffect(() => {
         if (liked) {
             setLikedIcon(Liked)
         }
