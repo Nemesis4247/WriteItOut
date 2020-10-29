@@ -43,14 +43,15 @@ class MainScreen extends React.Component {
       searchQuestionByString: "",
       checkedByTags: false,
       questionsList: []
-		}
-	}
+    }
+  }
 
-  componentDidMount(){
+  componentDidMount() {
     fetch('http://127.0.0.1:3001/get-questionList')
-    .then((response) => response.json())
-    .then((data) => {
-        if (data.status) {;
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status) {
+          ;
           this.requestQuestionsandUpvotes(data.data.message)
         }
         else {
@@ -63,30 +64,30 @@ class MainScreen extends React.Component {
   }
 
   requestQuestionsandUpvotes = (que_list) => {
-      fetch('http://127.0.0.1:3001/getLikedQuestions',{
-  			method: 'post',
-  			headers: {'Content-Type':'application/json'},
-  			body:JSON.stringify({
-          userid: this.state.enr_no
-  			})
-  		})
+    fetch('http://127.0.0.1:3001/getLikedQuestions', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userid: this.state.enr_no
+      })
+    })
       .then((response) => response.json())
       .then((data1) => {
 
-          if (data1.status) {
-              var likedQuestions = data1.data.message;
-              for (var i = 0; i < que_list.length; i++) {
-                que_list[i]["liked"] = likedQuestions.includes(que_list[i]["queid"])
-                que_list[i]["currentuserid"] = this.state.enr_no
-              }
-              this.setState({questionsList: que_list})
+        if (data1.status) {
+          var likedQuestions = data1.data.message;
+          for (var i = 0; i < que_list.length; i++) {
+            que_list[i]["liked"] = likedQuestions.includes(que_list[i]["queid"])
+            que_list[i]["currentuserid"] = this.state.enr_no
           }
-          else{
-            alert("Error: " + data1.data.message)
-          }
+          this.setState({ questionsList: que_list })
+        }
+        else {
+          alert("Error: " + data1.data.message)
+        }
       })
       .catch(err1 => {
-          alert("Error: " + err1)
+        alert("Error: " + err1)
       });
 
   }
@@ -159,7 +160,7 @@ class MainScreen extends React.Component {
   }
 
   searchQuestion = (event) => {
-    this.setState({searchQuestionByString: event.target.value})
+    this.setState({ searchQuestionByString: event.target.value })
   }
 
 
@@ -176,6 +177,8 @@ class MainScreen extends React.Component {
         return question.tags.toLowerCase().includes(this.state.searchQuestionByString.toLowerCase())
       });
     }
+
+    console.log(filteredQuestionList)
 
     return (
 

@@ -21,7 +21,7 @@ export default function Answer(props) {
 
     function handleLike() {
         setLiked(!liked)
-        fetch('http://127.0.0.1:3001/likeUnlikeAnswer', {
+        fetch('http://127.0.0.1:3001/likeUnlikeAnswer/', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
