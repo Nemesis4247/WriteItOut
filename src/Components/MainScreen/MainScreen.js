@@ -178,7 +178,7 @@ class MainScreen extends React.Component {
       });
     }
 
-    console.log(filteredQuestionList)
+    // console.log(filteredQuestionList)
 
     return (
 
@@ -212,8 +212,7 @@ class MainScreen extends React.Component {
                 <button onClick={this.postQuestion}
                   style={{ fontFamily: 'Luckiest Guy' }}
                   className="input-reset w-10 bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Post</button>
-                <Popup trigger={<button onClick={this.addTags}
-                  style={{ fontFamily: 'Luckiest Guy' }}
+                <Popup trigger={<button style={{ fontFamily: 'Luckiest Guy' }}
                   className="input-reset w-10 v-btm bg-dark-green fr white br3 f5 ma2 pv3-ns ba b--black-80 bg-hover-mid-gray" >Add tags</button>}
                   position="top center">
                   <div>
