@@ -1,11 +1,25 @@
 import React from 'react';
 import u_blank from './like.png';
 import u_filled from './liked.png';
-import { StyleRoot } from 'radium';
+import Radium, { StyleRoot } from 'radium';
+import { zoomIn } from 'react-animations';
+import { fadeOut } from 'react-animations';
 import profile from '../../Signin/profile.svg';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { withRouter } from 'react-router-dom';
+
+const Styles = {
+    zoomIn: {
+        animation: 'x 0.5s',
+        animationName: Radium.keyframes(zoomIn, 'zoomIn')
+    },
+    fadeOut: {
+        animation: 'x 0.5s',
+        animationName: Radium.keyframes(fadeOut, 'fadeOut')
+    }
+}
+
 
 
 class Question extends React.Component {
@@ -88,7 +102,7 @@ class Question extends React.Component {
               <p className="f5 ma2" style={{ fontFamily: 'Acme' }}> <strong> {this.state.name}</strong> <br /> {this.state.description} <br /> {this.state.datetime}</p>
             </div>
           </div>} modal >
-            <div className="w-100 ba b--black-20 center bg-light-blue tc pa4">
+            <div className="w-100 ba b--black-20 center bg-light-blue tc pa4"  style={Styles.zoomIn}>
 
               <img src={this.state.imageURL ? this.state.imageURL : profile}
                 className="dib center w5 mv4 h5 br-100 pointer"

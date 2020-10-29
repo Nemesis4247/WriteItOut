@@ -106,23 +106,27 @@ class Register extends React.Component {
 								style={{ fontFamily: 'Luckiest Guy' }}>WELCOME TO WriteItOut</h1>
 							<hr />
 							<p className="white ph3 f4" style={{ fontFamily: 'Righteous' }}>
-								Hola friends! This is a simple chat app which offers you realtime messaging with your friends. You can make friends by sending friend request to your known ones.
-								Register for free and experience the Chatter app. You are free to provide your valuable suggestions and reviews in the dowm embeded link.
-		        </p>
+							Hey Peeps! <br/>
+							This is a simple online discussion forum, especially for junior-senior interactions, to help the new comers and enthusiastic students post their queries and issues, and get them answered by other experienced people, amidst this corona virus epidemic. Register for free, and feel free to ask questions or answer others.
+							<br/>
+							<br/>
+							By using the Application, you represent and warrant that: (1) all registration information you submit will be true, accurate, current, and complete; (2) you will maintain the accuracy of such information and promptly update such registration information as necessary; (3) you have the legal capacity and you agree to comply with these Terms of Use; (4) you are not under the age of 13; (5) you will not access the Application through automated or non-human means, whether through a bot, script or otherwise; (6) you will not use the Application for any illegal or unauthorized purpose; and (7) your use of the Application will not violate any applicable law or regulation.
+							<br/>
+							<br/>
+							If you provide any information that is untrue, inaccurate, not current, or incomplete, we have the right to suspend or terminate your account and refuse any and all current or future use of the Application(or any portion thereof).
+							</p>
 							<a href="https://docs.google.com/forms/d/e/1FAIpQLSctq5jRd2_uTTuH50QhYL3VSAbzvYF4dFjvYLYaVrQmboivKg/viewform?usp=sf_link">
-								<img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w4-ns h1 h4-ns"
+								<img className="ba dib b--black-10 v-mid mt3 br-100 pointer w1 w4-ns h1 h4-ns"
 									src={chico} alt='Face' width='500px' height='auto'
 								/>
 							</a>
 							<div>
-								<p className="dib mr2" style={{ fontFamily: 'Righteous' }}>
-									Made with Love by
-		        </p>
-								<a href="https://www.facebook.com/profile.php?id=100004252209945">
-									<p className="dib white" style={{ fontFamily: 'Luckiest Guy' }}>
-										HEMANT YADAV
-		        </p>
-								</a>
+								<p className="mv3" style={{ fontFamily: 'Righteous' }}>
+									Made with ❤ <br/> by <br/>
+								</p>
+								<p className="white mv3" style={{ fontFamily: 'Luckiest Guy' }}>
+									Students of IIT Roorkee
+								</p>
 							</div>
 						</div>
 					</div>
@@ -210,25 +214,17 @@ class Register extends React.Component {
 
 							</div>
 							<hr className="mt4" />
+							<p className="tc b f6 mt2 glow pa2 i">Already Registered?</p>
 							<div className="tc b f6 mt2 glow pa2 i">
-								Already Registered ?
-				  	<NavLink
-									to="/"
-									className="white pointer bg-black pa2 mh5 br4"
-								>Sign In
-					</NavLink>
-								{/* <p
-			          className="white pointer bg-black pa2 mh5 br4"
-			          onClick={() => onRouteChange('signin')}>
-			          Sign In
-		          </p> */}
+						  	<NavLink
+											to="/"
+											className="white pointer bg-black pa2 mh5 br4"
+										>Sign In
+								</NavLink>
 							</div>
 
 						</div>
 					</div>
-
-
-
 				</div>
 			</StyleRoot>
 		);

@@ -51,8 +51,8 @@ class Signin extends React.Component {
 			method: 'post',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				email: this.state.signInEmail,
-				password: this.state.signInPassword
+				email: "clay@gmail.com",
+				password: "clay@jensen"
 			})
 		})
 			.then(response => response.json())
@@ -83,23 +83,21 @@ class Signin extends React.Component {
 								style={{ fontFamily: 'Luckiest Guy' }}>WELCOME TO WriteItOut</h1>
 							<hr />
 							<p className="white ph3 f4" style={{ fontFamily: 'Righteous' }}>
-								Hola friends! This is a simple chat app which offers you realtime messaging with your friends. You can make friends by sending friend request to your known ones.
-								Register for free and experience the Chatter app. You are free to provide your valuable suggestions and reviews in the dowm embeded link.
-		        </p>
+							Hey Peeps! <br/>
+							This is a simple online discussion forum, especially for junior-senior interactions, to help the new comers and enthusiastic students post their queries and issues, and get them answered by other experienced people, amidst this corona virus epidemic. Register for free, and feel free to ask questions or answer others.
+		        	</p>
 							<a href="https://docs.google.com/forms/d/e/1FAIpQLSctq5jRd2_uTTuH50QhYL3VSAbzvYF4dFjvYLYaVrQmboivKg/viewform?usp=sf_link">
-								<img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w4-ns h1 h4-ns"
+								<img className="ba dib b--black-10 v-mid mt3 br-100 pointer w1 w4-ns h1 h4-ns"
 									src={chico} alt='Face' width='500px' height='auto'
 								/>
 							</a>
 							<div>
-								<p className="dib mr2" style={{ fontFamily: 'Righteous' }}>
-									Made with Love by
-		        </p>
-								<a href="https://www.facebook.com/profile.php?id=100004252209945">
-									<p className="dib white" style={{ fontFamily: 'Luckiest Guy' }}>
-										HEMANT YADAV
-		        </p>
-								</a>
+								<p className="mv3" style={{ fontFamily: 'Righteous' }}>
+									Made with ❤ <br/> by <br/>
+		        		</p>
+								<p className="white mv3" style={{ fontFamily: 'Luckiest Guy' }}>
+									Students of IIT Roorkee
+	        			</p>
 							</div>
 						</div>
 					</div>
@@ -130,7 +128,7 @@ class Signin extends React.Component {
 										value="Sign In"
 										onClick={this.onSubmitSignIn}
 										type="submit" />
-									<p className="serif tracked  pv1 f6 tc"
+									<p className="serif tracked  pv1 f6 tc mv2"
 										style={{ fontFamily: 'Abril Fatface' }}>or</p>
 									<div className="tc">
 										<img className="ba dib b--black-10 v-mid mh2 br-100 pointer w1 w2-ns h1 h2-ns" title="In Beta Mode" src={fb} id='inputimage' alt='facebook' width='500px' height='auto' />
@@ -140,18 +138,13 @@ class Signin extends React.Component {
 								</div>
 							</div>
 							<hr className="mt4" />
-							<div className="tc b f6 mt2 glow pa2 i">
-								New Member?
-				  	<NavLink
-									to="/register"
-									className="white pointer bg-black pa2 mh5 br4"
-								>Register here
-					</NavLink>
-								{/* <p
-			          className="white pointer bg-black pa2 mh5 br4"
-			          onClick={() => onRouteChange('register')}>
-			          Register here
-		          </p> */}
+							<p className="tc b f4 mt5 glow pa2 i">New Member? </p>
+							<div className="tc b f4 mt2 glow pa2 i">
+						  	<NavLink
+											to="/register"
+											className="white pointer bg-black pa2 br4"
+										>Register here
+								</NavLink>
 							</div>
 
 						</div>
