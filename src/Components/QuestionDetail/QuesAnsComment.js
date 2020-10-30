@@ -60,9 +60,9 @@ export default function QuesAnsComment(props) {
 
     return (
         <StyleRoot>
-            <div className="dt w-100 h-100 vh-100" style={Styles.zoomIn}>
+            <div className="dt w-100 h-100 vh-100">
                 <Personal_info data={props.data.user} />
-                <div className="dtc w-70 bg-near-white v-top h-100" >
+                <div className="dtc w-70 bg-near-white v-top h-100"  style={Styles.zoomIn}>
                     <div id={styles.container}>
                         {data && <QuestionHeading questionHeading={data.que} />}
                         <div id={styles.answer}>

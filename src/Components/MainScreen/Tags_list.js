@@ -8,10 +8,11 @@ class Tags_list extends React.Component {
 	}
 
 	render() {
+		console.log(this.props);
     const TagComponent = this.props.tags.map((tag, i) => {
       return (
         <Tags
-          key={i}
+          key={tag}
           value={tag}
 					index={i}
 					removeTag={ this.props.removeTag }
