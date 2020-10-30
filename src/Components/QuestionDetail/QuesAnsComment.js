@@ -28,9 +28,10 @@ export default function QuesAnsComment(props) {
 
     const [data, setData] = useState(null)
     const [answer, setAnswer] = useState('')
+    const [answers, setAnswers] = useState([])
 
     function addAnswer() {
-        fetch('http://127.0.0.1:3001/answer', {
+        if (answer) fetch('http://127.0.0.1:3001/answer', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -42,7 +43,17 @@ export default function QuesAnsComment(props) {
             })
         })
             .then(response => {
-                if (response.ok) alert('Answer added!')
+                if (response.ok) {
+                    setAnswers([...answers, {
+                        name: props.data.user.name,
+                        bio: props.data.user.description,
+                        body: answer,
+                        datetime: 'just now',
+                        upvotes: 0,
+                        comments: []
+                    }])
+                    setAnswer('')
+                }
                 else alert('Error!')
             })
     }
@@ -95,6 +106,11 @@ export default function QuesAnsComment(props) {
                                 datetime={answer.datetime}
                                 upvotes={answer.upvotes}
                                 comments={answer.comments}
+                            />
+                        })}
+                        {answers.map(answer => {
+                            return <Answer
+                                {...answer}
                             />
                         })}
                     </div>
