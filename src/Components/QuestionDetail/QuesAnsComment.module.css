@@ -5,3 +5,38 @@
     background-color: lightgray;
     font-family: 'Acme';
 }
+
+#answer {
+    display: flex;
+    max-width: 500px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#answerPhoto {
+    height: 60px;
+    border-radius: 60px;
+    align-self: center;
+}
+
+#answerBox {
+    width: 300px;
+    border-radius: 10px;
+    outline: none;
+    overflow: hidden;
+    padding: 5px;
+    resize: none;
+    margin: 5px;
+}
+
+#addAnswer {
+    padding: 8px 10px;
+    border-radius: 30px;
+    outline: none;
+    border-width: 0;
+    background-color: cornflowerblue;
+    color: white;
+    font-size: small;
+    font-weight: 600;
+    margin-right: 10px;
+}
