@@ -35,11 +35,11 @@ export default function QuesAnsComment(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 ans: answer,
                 queid: id,
-                userid: props.data.userid
-            }
+                userid: props.data.user.userid
+            })
         })
             .then(response => {
                 if (response.ok) alert('Answer added!')
@@ -48,6 +48,7 @@ export default function QuesAnsComment(props) {
     }
 
     useEffect(() => {
+        console.log("props :", props.data.user.userid)
         const fetcher = () => {
             fetch(`http://127.0.0.1:3001/get-question/${id}/`)
                 .then(response => response.json())
@@ -62,7 +63,7 @@ export default function QuesAnsComment(props) {
         <StyleRoot>
             <div className="dt w-100 h-100 vh-100">
                 <Personal_info data={props.data.user} />
-                <div className="dtc w-70 bg-near-white v-top h-100"  style={Styles.zoomIn}>
+                <div className="dtc w-70 bg-near-white v-top h-100" style={Styles.zoomIn}>
                     <div id={styles.container}>
                         {data && <QuestionHeading questionHeading={data.que} />}
                         <div id={styles.answer}>
@@ -76,11 +77,10 @@ export default function QuesAnsComment(props) {
                                     e.target.style.height = e.target.scrollHeight + 'px'
                                 }}
                                 value={answer}
-                                onClick={addAnswer}
                             />
                             <button
                                 id={styles.addAnswer}
-                                onClick={() => { }}
+                                onClick={addAnswer}
                             >
                                 Add answer
                             </button>
