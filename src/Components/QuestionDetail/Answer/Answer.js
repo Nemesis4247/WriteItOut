@@ -97,7 +97,7 @@ export default function Answer(props) {
                     src={likedIcon}
                     onClick={handleLike}
                 />
-                <p style={{ marginLeft: '5px' }}>{props.upvotes} upvotes</p>
+                <p style={{ marginLeft: '5px' }}>{props.upvotes + liked ? 1 : 0} upvotes</p>
             </div>
             <div id={styles.comment}>
                 <img src={Profile} id={styles.commenterPhoto} />

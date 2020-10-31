@@ -42,9 +42,12 @@ export default function QuesAnsComment(props) {
                 userid: props.data.user.userid
             })
         })
-            .then(response => {
-                if (response.ok) {
+            .then(response => response.json())
+            .then(json => {
+                if (json.status) {
                     setAnswers([...answers, {
+                        ansid: json.data.ansid,
+                        userid: props.data.user.userid,
                         name: props.data.user.name,
                         bio: props.data.user.description,
                         body: answer,
