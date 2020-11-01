@@ -9,6 +9,7 @@ export default function Answer(props) {
     const [liked, setLiked] = useState(false)
     const [likedIcon, setLikedIcon] = useState(Like)
     const [commentText, setCommentText] = useState('')
+    const [comments, setComments] = useState([])
 
     useEffect(() => {
         const fetcher = () => {
@@ -70,7 +71,13 @@ export default function Answer(props) {
         })
             .then(response => {
                 if (response.ok) {
-                    alert('Comment added!')
+                    setComments([...comments, {
+                        name: props.name,
+                        bio: props.bio,
+                        body: commentText,
+                        datetime: 'just now'
+                    }])
+                    setCommentText('')
                 }
                 else {
                     alert('Error')
@@ -110,15 +117,22 @@ export default function Answer(props) {
                         e.target.style.height = e.target.scrollHeight + 'px'
                     }}
                     value={commentText}
-                    onClick={addComment}
                 />
                 <button
                     id={styles.addComment}
-                    onClick={() => { }}
+                    onClick={addComment}
                 >
                     Add comment
                 </button>
             </div>
+            {comments.map(comment => {
+                return <Comment
+                    name={comment.name}
+                    bio={comment.bio}
+                    body={comment.body}
+                    datetime={comment.datetime}
+                />
+            })}
             {props.comments.map(comment => {
                 return <Comment
                     profilepic={comment.profilepic}
