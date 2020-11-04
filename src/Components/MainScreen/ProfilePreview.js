@@ -42,33 +42,35 @@ class ProfilePreview extends React.Component {
   }
 
   onProfileEditToggle = () => {
-    if (this.state.editprofile) {
-      fetch('http://127.0.0.1:3001/update_details', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: this.state.name,
-          imagePath: this.state.imageURL,
-          year: this.state.year,
-          branch: this.state.branch,
-          description: this.state.description,
-          userid: this.state.enr_no
-        })
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.status) {
-            alert("Updated Successfully!")
-          }
-          else {
-            alert(data.data.message)
-          }
-        })
-        .catch(err => {
-          alert("Updation failed due to " + err)
-        })
-    }
     this.setState({ editprofile: !this.state.editprofile })
+  }
+
+  onSubmitData = () => {
+    fetch('http://127.0.0.1:3001/update_details', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: this.state.name,
+        imagePath: this.state.imageURL,
+        year: this.state.year,
+        branch: this.state.branch,
+        description: this.state.description,
+        userid: this.state.enr_no
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status) {
+          alert("Updated Successfully!")
+          this.onProfileEditToggle()
+        }
+        else {
+          alert(data.data.message)
+        }
+      })
+      .catch(err => {
+        alert("Updation failed due to " + err)
+      })
   }
 
   logout = () => {
@@ -121,7 +123,7 @@ class ProfilePreview extends React.Component {
           {
             this.state.editprofile === false ?
               <p className="v-mid f3 mv4"
-                style={{ fontFamily: 'Abril Fatface' }}> {this.state.year} year, {this.state.branch} </p> :
+                style={{ fontFamily: 'Abril Fatface' }}>Year {this.state.year}, {this.state.branch} </p> :
               <div>
                 <input id="year_id"
                   className="v-mid f3 mv2 pa2" type="number"
@@ -159,7 +161,7 @@ class ProfilePreview extends React.Component {
             this.state.editprofile === true &&
             <input className="input-reset tc white f6 b ttu mv2 w-50 pa3 pointer bg-black hover-bg-near-black bn br-pill"
               value="Submit"
-              onClick={this.onProfileEditToggle}
+              onClick={this.onSubmitData}
               type="submit" />
           }
 

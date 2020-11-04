@@ -82,9 +82,11 @@ class Signin extends React.Component {
 							<h1 className="serif tracked ma0 mb4 b pa3 white br4 f1 tc bg-black"
 								style={{ fontFamily: 'Luckiest Guy' }}>WELCOME TO WriteItOut</h1>
 							<hr />
-							<p className="white ph3 f4" style={{ fontFamily: 'Righteous' }}>
+							<p className="white ph3 f4 tl" style={{ fontFamily: 'Righteous' }}>
 							Hey Peeps! <br/>
 							This is a simple online discussion forum, especially for junior-senior interactions, to help the new comers and enthusiastic students post their queries and issues, and get them answered by other experienced people, amidst this corona virus epidemic. Register for free, and feel free to ask questions or answer others.
+							<br/>
+							Feel free to give review in the down embed link.
 		        	</p>
 							<a href="https://docs.google.com/forms/d/e/1FAIpQLSctq5jRd2_uTTuH50QhYL3VSAbzvYF4dFjvYLYaVrQmboivKg/viewform?usp=sf_link">
 								<img className="ba dib b--black-10 v-mid mt3 br-100 pointer w1 w4-ns h1 h4-ns"

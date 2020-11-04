@@ -131,7 +131,7 @@ class Personal_info extends React.Component {
                 {
                     this.state.editprofile === false ?
                         <p className="v-mid f3 mv4"
-                            style={{ fontFamily: 'Abril Fatface' }}> {this.state.year} year, {this.state.branch} </p> :
+                            style={{ fontFamily: 'Abril Fatface' }}>Year {this.state.year}, {this.state.branch} </p> :
                         <div>
                             <input id="year_id"
                                 className="v-mid f3 mv2 pa2" type="number"
